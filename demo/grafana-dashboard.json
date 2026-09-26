@@ -1,0 +1,86 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "cilium-obi-live",
+    "title": "Cilium + OBI Live Demo",
+    "tags": ["cilium", "hubble", "obi", "ebpf"],
+    "timezone": "browser",
+    "schemaVersion": 42,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-15m",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "type": "stat",
+        "title": "OBI instrumented services",
+        "description": "Services currently exporting OBI HTTP server metrics.",
+        "gridPos": {"h": 5, "w": 8, "x": 0, "y": 0},
+        "datasource": {"type": "prometheus", "uid": "prometheus"},
+        "targets": [{"refId": "A", "expr": "count(count by (service_name) (http_server_request_duration_seconds_count))", "instant": true}],
+        "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}}, "overrides": []},
+        "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "orientation": "auto", "textMode": "auto", "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "wideLayout": true}
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Cilium metric series",
+        "description": "Prometheus series from the Cilium agent metrics endpoints.",
+        "gridPos": {"h": 5, "w": 8, "x": 8, "y": 0},
+        "datasource": {"type": "prometheus", "uid": "prometheus"},
+        "targets": [{"refId": "A", "expr": "count({__name__=~\"cilium_.*\"})", "instant": true}],
+        "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "blue", "value": null}]}}, "overrides": []},
+        "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "orientation": "auto", "textMode": "auto", "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "wideLayout": true}
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Hubble metric series",
+        "description": "Prometheus series from Hubble metrics on every node.",
+        "gridPos": {"h": 5, "w": 8, "x": 16, "y": 0},
+        "datasource": {"type": "prometheus", "uid": "prometheus"},
+        "targets": [{"refId": "A", "expr": "count({__name__=~\"hubble_.*\"})", "instant": true}],
+        "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "purple", "value": null}]}}, "overrides": []},
+        "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "orientation": "auto", "textMode": "auto", "colorMode": "background", "graphMode": "none", "justifyMode": "auto", "wideLayout": true}
+      },
+      {
+        "id": 4,
+        "type": "timeseries",
+        "title": "OBI request rate by HTTP status",
+        "description": "Application request rate produced by OBI without SDK instrumentation.",
+        "gridPos": {"h": 9, "w": 12, "x": 0, "y": 5},
+        "datasource": {"type": "prometheus", "uid": "prometheus"},
+        "targets": [{"refId": "A", "expr": "sum by (http_response_status_code) (rate(http_server_request_duration_seconds_count[1m]))", "legendFormat": "HTTP {{http_response_status_code}}"}],
+        "fieldConfig": {"defaults": {"unit": "reqps", "color": {"mode": "palette-classic"}}, "overrides": []},
+        "options": {"legend": {"displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull"]}, "tooltip": {"mode": "multi", "sort": "desc"}}
+      },
+      {
+        "id": 5,
+        "type": "timeseries",
+        "title": "Hubble flows processed",
+        "description": "Node-level Hubble flow processing rate exported through the Collector.",
+        "gridPos": {"h": 9, "w": 12, "x": 12, "y": 5},
+        "datasource": {"type": "prometheus", "uid": "prometheus"},
+        "targets": [{"refId": "A", "expr": "sum(rate(hubble_flows_processed_total[1m]))", "legendFormat": "flows/s"}],
+        "fieldConfig": {"defaults": {"unit": "ops", "color": {"mode": "palette-classic"}}, "overrides": []},
+        "options": {"legend": {"displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull"]}, "tooltip": {"mode": "single", "sort": "none"}}
+      },
+      {
+        "id": 6,
+        "type": "timeseries",
+        "title": "Cilium drops by reason",
+        "description": "Datapath drop rate, if any drops occur during the selected period.",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 14},
+        "datasource": {"type": "prometheus", "uid": "prometheus"},
+        "targets": [{"refId": "A", "expr": "sum by (reason) (rate(cilium_drop_count_total[1m]))", "legendFormat": "{{reason}}"}],
+        "fieldConfig": {"defaults": {"unit": "ops", "color": {"mode": "palette-classic"}}, "overrides": []},
+        "options": {"legend": {"displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull"]}, "tooltip": {"mode": "multi", "sort": "desc"}}
+      }
+    ]
+  },
+  "overwrite": true,
+  "message": "Create live Cilium and OBI demo dashboard"
+}

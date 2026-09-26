@@ -1,3 +1,5 @@
 .DS_Store
 obi-cilium-demo-upstream/
 *.log
+slides/
+scripts/capture-screenshots.mjs

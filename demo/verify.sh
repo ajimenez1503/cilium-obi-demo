@@ -20,7 +20,7 @@ kubectl --context "${KUBE_CONTEXT}" -n obi-nginx-example get daemonset obi-opent
   -o jsonpath='{.spec.template.spec.containers[0].image}{" ready="}{.status.numberReady}{" desired="}{.status.desiredNumberScheduled}{"\n"}'
 
 printf '\nOBI attachment or capability errors\n'
-if kubectl --context "${KUBE_CONTEXT}" -n obi-nginx-example logs daemonset/obi-opentelemetry-ebpf-instrumentation --all-pods=true --prefix \
+if kubectl --context "${KUBE_CONTEXT}" -n obi-nginx-example logs daemonset/obi-opentelemetry-ebpf-instrumentation --all-pods=true --prefix --since=5m \
   | grep -Ei 'error|failed|cilium.*priority|required system capabilities not present|disabl.*context propagation'; then
   printf 'review the matching OBI log lines above before using the demo\n' >&2
 else
@@ -34,7 +34,7 @@ kubectl --context "${KUBE_CONTEXT}" -n kube-system exec daemonset/cilium -c cili
 
 printf '\nCilium metrics bridge\n'
 kubectl --context "${KUBE_CONTEXT}" -n obi-nginx-example get deployment cilium-metrics-collector
-if kubectl --context "${KUBE_CONTEXT}" -n obi-nginx-example logs deployment/cilium-metrics-collector --tail=200 \
+if kubectl --context "${KUBE_CONTEXT}" -n obi-nginx-example logs deployment/cilium-metrics-collector --since=5m \
   | grep -Ei 'exporter.*failed|scrape.*failed|connection refused|no such host'; then
   printf 'review the matching Collector log lines above before using Grafana metrics\n' >&2
 else

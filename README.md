@@ -23,6 +23,14 @@ flowchart LR
 
 OBI supplies application spans and RED metrics. Hubble supplies network identity, flow, verdict, and drop evidence. An OpenTelemetry Collector scrapes the Cilium agent and Hubble Prometheus endpoints and sends those metrics to the same Grafana LGTM instance. Hubble flow records remain available through Relay, the CLI, and Hubble UI.
 
+## Live evidence
+
+The same request path is visible as application telemetry in Grafana and as network flows in Hubble.
+
+![OBI, Cilium, and Hubble telemetry in Grafana](evidence/grafana-cilium-obi.png)
+
+![The demo request path in Hubble UI](evidence/hubble-flows.png)
+
 ## Pinned versions
 
 - Cilium chart and application: `1.20.2`
@@ -65,6 +73,23 @@ kubectl -n kube-system port-forward svc/hubble-ui 12000:80
 - Application: <http://localhost:8080>
 - Grafana: <http://localhost:3000>, credentials `admin` / `admin`
 - Hubble UI: <http://localhost:12000>
+
+Import the included Grafana dashboard after the Grafana port-forward is ready:
+
+```bash
+curl --fail-with-body \
+  --user admin:admin \
+  --header 'Content-Type: application/json' \
+  --data @demo/grafana-dashboard.json \
+  http://localhost:3000/api/dashboards/db
+```
+
+Open the combined dashboard at
+<http://localhost:3000/d/cilium-obi-live/cilium-2b-obi-live-demo>.
+
+If ports `8080` or `3000` are already in use, choose alternatives such as
+`18080:8080` and `13000:3000`, then use the corresponding localhost ports in
+the URLs and traffic command.
 
 The Kubernetes traffic generator runs continuously. To generate one controlled request sweep:
 
