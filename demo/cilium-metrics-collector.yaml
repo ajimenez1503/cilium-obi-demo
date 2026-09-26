@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cilium-metrics-collector
+  namespace: obi-nginx-example
+data:
+  collector.yaml: |
+    receivers:
+      prometheus:
+        config:
+          scrape_configs:
+            - job_name: cilium-agent
+              scrape_interval: 15s
+              dns_sd_configs:
+                - names:
+                    - cilium-agent.kube-system.svc.cluster.local
+                  type: A
+                  port: 9962
+            - job_name: hubble-metrics
+              scrape_interval: 15s
+              dns_sd_configs:
+                - names:
+                    - hubble-metrics.kube-system.svc.cluster.local
+                  type: A
+                  port: 9965
+
+    processors:
+      batch: {}
+      resource:
+        attributes:
+          - key: demo.stack
+            value: cilium-obi
+            action: upsert
+
+    exporters:
+      otlphttp/lgtm:
+        endpoint: http://lgtm.obi-nginx-example.svc.cluster.local:4318
+
+    extensions:
+      health_check:
+        endpoint: 0.0.0.0:13133
+
+    service:
+      extensions:
+        - health_check
+      pipelines:
+        metrics:
+          receivers:
+            - prometheus
+          processors:
+            - resource
+            - batch
+          exporters:
+            - otlphttp/lgtm
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cilium-metrics-collector
+  namespace: obi-nginx-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cilium-metrics-collector
+  template:
+    metadata:
+      labels:
+        app: cilium-metrics-collector
+    spec:
+      containers:
+        - name: otelcol-contrib
+          image: otel/opentelemetry-collector-contrib:0.161.0
+          args:
+            - --config=/etc/otelcol-contrib/collector.yaml
+          ports:
+            - name: health
+              containerPort: 13133
+          readinessProbe:
+            httpGet:
+              path: /
+              port: health
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          volumeMounts:
+            - name: config
+              mountPath: /etc/otelcol-contrib
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: cilium-metrics-collector

@@ -1,0 +1,5 @@
+bpf:
+  enableTCX: false
+
+extraConfig:
+  bpf-filter-priority: "2"

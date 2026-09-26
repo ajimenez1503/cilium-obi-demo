@@ -1,0 +1,25 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: recommendations-v1-http-visibility
+  namespace: obi-nginx-example
+spec:
+  endpointSelector:
+    matchLabels:
+      app: recommendations-v1
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: obi-nginx-example
+            app: edge-nginx
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: obi-nginx-example
+            app: recommendations-v2
+      toPorts:
+        - ports:
+            - port: "8081"
+              protocol: TCP
+          rules:
+            http:
+              - method: GET
+                path: ".*"

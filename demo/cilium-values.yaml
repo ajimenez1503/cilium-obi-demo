@@ -1,0 +1,29 @@
+ipam:
+  mode: kubernetes
+
+bpf:
+  enableTCX: true
+  datapathMode: veth
+
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+  metrics:
+    enableOpenMetrics: true
+    enabled:
+      - dns
+      - drop
+      - tcp
+      - flow
+      - icmp
+
+prometheus:
+  enabled: true
+  metricsService: true
+
+operator:
+  prometheus:
+    enabled: true

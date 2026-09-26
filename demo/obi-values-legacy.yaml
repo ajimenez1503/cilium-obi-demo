@@ -1,0 +1,4 @@
+config:
+  data:
+    ebpf:
+      traffic_control_backend: tc
