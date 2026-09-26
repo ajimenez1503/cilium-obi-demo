@@ -1,0 +1,42 @@
+This is ApacheBench, Version 2.3 <$Revision: 1923142 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+
+
+Server Software:        nginx/1.27.5
+Server Hostname:        127.0.0.1
+Server Port:            18080
+
+Document Path:          /api/users/42/recommendations/v1/homepage-hero
+Document Length:        22 bytes
+
+Concurrency Level:      20
+Time taken for tests:   10.148 seconds
+Complete requests:      200
+Failed requests:        0
+Total transferred:      33000 bytes
+HTML transferred:       4400 bytes
+Requests per second:    19.71 [#/sec] (mean)
+Time per request:       1014.832 [ms] (mean)
+Time per request:       50.742 [ms] (mean, across all concurrent requests)
+Transfer rate:          3.18 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       1
+Processing:  1004 1012   4.7   1012    1026
+Waiting:        3   11   4.7     10      25
+Total:       1004 1013   4.8   1012    1027
+
+Percentage of the requests served within a certain time (ms)
+  50%   1012
+  66%   1014
+  75%   1015
+  80%   1015
+  90%   1019
+  95%   1023
+  98%   1025
+  99%   1027
+ 100%   1027 (longest request)

@@ -1,0 +1,662 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-26T18:31:39.169Z",
+  "context": "kind-obi-cilium-talk",
+  "target": "http://127.0.0.1:18080/api/users/42/recommendations/v1/homepage-hero",
+  "method": {
+    "comparison": "B versus D on the same three-node kind cluster",
+    "samplesPerCondition": 5,
+    "requestsPerSample": 200,
+    "concurrency": 20,
+    "warmupRequests": 40,
+    "backgroundTrafficPaused": true,
+    "caveat": "Local kind and kubectl port-forward rehearsal. These results are not production capacity numbers."
+  },
+  "baseline": {
+    "id": "B",
+    "name": "Cilium and Hubble, OBI disabled",
+    "samples": [
+      {
+        "index": 1,
+        "requestsPerSecond": 19.79,
+        "failedRequests": 0,
+        "p50Ms": 1007,
+        "p95Ms": 1018,
+        "p99Ms": 1021,
+        "completedRequests": 200,
+        "durationSeconds": 10.108,
+        "resources": {
+          "elapsedSeconds": 10.356,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.11473059096176129,
+              "memoryWorkingSetBytes": 762699776,
+              "podCount": 3
+            },
+            "application": {
+              "cpuCores": 0.008598203939745076,
+              "memoryWorkingSetBytes": 6901760,
+              "podCount": 3
+            },
+            "hubble": {
+              "cpuCores": 0.039915990730011584,
+              "memoryWorkingSetBytes": 166715392,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0.005241019698725377,
+              "memoryWorkingSetBytes": 78950400,
+              "podCount": 1
+            }
+          }
+        }
+      },
+      {
+        "index": 2,
+        "requestsPerSecond": 19.76,
+        "failedRequests": 0,
+        "p50Ms": 1011,
+        "p95Ms": 1015,
+        "p99Ms": 1019,
+        "completedRequests": 200,
+        "durationSeconds": 10.12,
+        "resources": {
+          "elapsedSeconds": 10.401,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.07778146332083453,
+              "memoryWorkingSetBytes": 762691584,
+              "podCount": 3
+            },
+            "application": {
+              "cpuCores": 0.009660321122968945,
+              "memoryWorkingSetBytes": 6901760,
+              "podCount": 3
+            },
+            "hubble": {
+              "cpuCores": 0.026885107201230652,
+              "memoryWorkingSetBytes": 166719488,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0.015027401211421978,
+              "memoryWorkingSetBytes": 78954496,
+              "podCount": 1
+            }
+          }
+        }
+      },
+      {
+        "index": 3,
+        "requestsPerSecond": 19.7,
+        "failedRequests": 0,
+        "p50Ms": 1010,
+        "p95Ms": 1036,
+        "p99Ms": 1043,
+        "completedRequests": 200,
+        "durationSeconds": 10.151,
+        "resources": {
+          "elapsedSeconds": 10.394,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.1038223975370406,
+              "memoryWorkingSetBytes": 764669952,
+              "podCount": 3
+            },
+            "application": {
+              "cpuCores": 0.011878968635751394,
+              "memoryWorkingSetBytes": 6918144,
+              "podCount": 3
+            },
+            "hubble": {
+              "cpuCores": 0.02105695593611699,
+              "memoryWorkingSetBytes": 166752256,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0,
+              "memoryWorkingSetBytes": 78954496,
+              "podCount": 1
+            }
+          }
+        }
+      },
+      {
+        "index": 4,
+        "requestsPerSecond": 19.77,
+        "failedRequests": 0,
+        "p50Ms": 1009,
+        "p95Ms": 1016,
+        "p99Ms": 1017,
+        "completedRequests": 200,
+        "durationSeconds": 10.118,
+        "resources": {
+          "elapsedSeconds": 10.34,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.09333027079303674,
+              "memoryWorkingSetBytes": 772767744,
+              "podCount": 3
+            },
+            "application": {
+              "cpuCores": 0.0038298839458413923,
+              "memoryWorkingSetBytes": 6922240,
+              "podCount": 3
+            },
+            "hubble": {
+              "cpuCores": 0.025845067698259186,
+              "memoryWorkingSetBytes": 167268352,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0.007267408123791103,
+              "memoryWorkingSetBytes": 78950400,
+              "podCount": 1
+            }
+          }
+        }
+      },
+      {
+        "index": 5,
+        "requestsPerSecond": 19.77,
+        "failedRequests": 0,
+        "p50Ms": 1009,
+        "p95Ms": 1018,
+        "p99Ms": 1020,
+        "completedRequests": 200,
+        "durationSeconds": 10.117,
+        "resources": {
+          "elapsedSeconds": 10.416,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.11938728878648232,
+              "memoryWorkingSetBytes": 778240000,
+              "podCount": 3
+            },
+            "application": {
+              "cpuCores": 0.01349049539170507,
+              "memoryWorkingSetBytes": 6934528,
+              "podCount": 3
+            },
+            "hubble": {
+              "cpuCores": 0.01140965821812596,
+              "memoryWorkingSetBytes": 168288256,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0.006311155913978495,
+              "memoryWorkingSetBytes": 78950400,
+              "podCount": 1
+            }
+          }
+        }
+      }
+    ],
+    "summary": {
+      "requestsPerSecond": {
+        "median": 19.77,
+        "min": 19.7,
+        "max": 19.79
+      },
+      "p50Ms": {
+        "median": 1009,
+        "min": 1007,
+        "max": 1011
+      },
+      "p95Ms": {
+        "median": 1018,
+        "min": 1015,
+        "max": 1036
+      },
+      "p99Ms": {
+        "median": 1020,
+        "min": 1017,
+        "max": 1043
+      },
+      "failedRequests": 0,
+      "completedRequests": 1000,
+      "resources": {
+        "application": {
+          "cpuCores": {
+            "median": 0.009660321122968945,
+            "min": 0.0038298839458413923,
+            "max": 0.01349049539170507
+          },
+          "memoryWorkingSetBytes": {
+            "median": 6918144,
+            "min": 6901760,
+            "max": 6934528
+          }
+        },
+        "ciliumAgent": {
+          "cpuCores": {
+            "median": 0.1038223975370406,
+            "min": 0.07778146332083453,
+            "max": 0.11938728878648232
+          },
+          "memoryWorkingSetBytes": {
+            "median": 764669952,
+            "min": 762691584,
+            "max": 778240000
+          }
+        },
+        "hubble": {
+          "cpuCores": {
+            "median": 0.025845067698259186,
+            "min": 0.01140965821812596,
+            "max": 0.039915990730011584
+          },
+          "memoryWorkingSetBytes": {
+            "median": 166752256,
+            "min": 166715392,
+            "max": 168288256
+          }
+        },
+        "collector": {
+          "cpuCores": {
+            "median": 0.006311155913978495,
+            "min": 0,
+            "max": 0.015027401211421978
+          },
+          "memoryWorkingSetBytes": {
+            "median": 78950400,
+            "min": 78950400,
+            "max": 78954496
+          }
+        },
+        "obi": {
+          "cpuCores": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "memoryWorkingSetBytes": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        }
+      },
+      "telemetryDelta": {
+        "acceptedSpans": 0,
+        "exportedSpans": 0,
+        "hubbleLostEvents": 36
+      }
+    },
+    "telemetryStart": {
+      "acceptedSpans": 138927,
+      "exportedSpans": 138927,
+      "hubbleLostEvents": 656
+    },
+    "telemetryEnd": {
+      "acceptedSpans": 138927,
+      "exportedSpans": 138927,
+      "hubbleLostEvents": 692
+    }
+  },
+  "combined": {
+    "id": "D",
+    "name": "Cilium, Hubble, and OBI with TCX propagation",
+    "samples": [
+      {
+        "index": 1,
+        "requestsPerSecond": 19.73,
+        "failedRequests": 0,
+        "p50Ms": 1011,
+        "p95Ms": 1018,
+        "p99Ms": 1019,
+        "completedRequests": 200,
+        "durationSeconds": 10.136,
+        "resources": {
+          "elapsedSeconds": 10.366,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.11919756897549683,
+              "memoryWorkingSetBytes": 777867264,
+              "podCount": 3
+            },
+            "application": {
+              "cpuCores": 0.004156473085085858,
+              "memoryWorkingSetBytes": 7032832,
+              "podCount": 3
+            },
+            "obi": {
+              "cpuCores": 0.17481072737796644,
+              "memoryWorkingSetBytes": 258629632,
+              "podCount": 2
+            },
+            "hubble": {
+              "cpuCores": 0.037513216284005405,
+              "memoryWorkingSetBytes": 169222144,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0.006947713679336292,
+              "memoryWorkingSetBytes": 78995456,
+              "podCount": 1
+            }
+          }
+        }
+      },
+      {
+        "index": 2,
+        "requestsPerSecond": 19.76,
+        "failedRequests": 0,
+        "p50Ms": 1009,
+        "p95Ms": 1020,
+        "p99Ms": 1021,
+        "completedRequests": 200,
+        "durationSeconds": 10.122,
+        "resources": {
+          "elapsedSeconds": 10.441,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.07659879321904031,
+              "memoryWorkingSetBytes": 779038720,
+              "podCount": 3
+            },
+            "application": {
+              "cpuCores": 0.014124796475433387,
+              "memoryWorkingSetBytes": 7057408,
+              "podCount": 3
+            },
+            "obi": {
+              "cpuCores": 0.05333847332630974,
+              "memoryWorkingSetBytes": 265404416,
+              "podCount": 2
+            },
+            "hubble": {
+              "cpuCores": 0.01841748874628867,
+              "memoryWorkingSetBytes": 169222144,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0,
+              "memoryWorkingSetBytes": 78995456,
+              "podCount": 1
+            }
+          }
+        }
+      },
+      {
+        "index": 3,
+        "requestsPerSecond": 19.71,
+        "failedRequests": 0,
+        "p50Ms": 1012,
+        "p95Ms": 1023,
+        "p99Ms": 1027,
+        "completedRequests": 200,
+        "durationSeconds": 10.148,
+        "resources": {
+          "elapsedSeconds": 10.406,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.1492662886796079,
+              "memoryWorkingSetBytes": 778493952,
+              "podCount": 3
+            },
+            "obi": {
+              "cpuCores": 0.0017844512781087832,
+              "memoryWorkingSetBytes": 265461760,
+              "podCount": 2
+            },
+            "application": {
+              "cpuCores": 0.011239669421487603,
+              "memoryWorkingSetBytes": 7069696,
+              "podCount": 3
+            },
+            "hubble": {
+              "cpuCores": 0.021149721314626176,
+              "memoryWorkingSetBytes": 175312896,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0.007221410724581972,
+              "memoryWorkingSetBytes": 79130624,
+              "podCount": 1
+            }
+          }
+        }
+      },
+      {
+        "index": 4,
+        "requestsPerSecond": 19.73,
+        "failedRequests": 0,
+        "p50Ms": 1012,
+        "p95Ms": 1018,
+        "p99Ms": 1019,
+        "completedRequests": 200,
+        "durationSeconds": 10.137,
+        "resources": {
+          "elapsedSeconds": 10.409,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.11488807762513209,
+              "memoryWorkingSetBytes": 778592256,
+              "podCount": 3
+            },
+            "application": {
+              "cpuCores": 0.022833701604380825,
+              "memoryWorkingSetBytes": 7069696,
+              "podCount": 3
+            },
+            "obi": {
+              "cpuCores": 0.002229993275050437,
+              "memoryWorkingSetBytes": 267087872,
+              "podCount": 2
+            },
+            "hubble": {
+              "cpuCores": 0.0896061100970314,
+              "memoryWorkingSetBytes": 176824320,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0.00618637717359977,
+              "memoryWorkingSetBytes": 79101952,
+              "podCount": 1
+            }
+          }
+        }
+      },
+      {
+        "index": 5,
+        "requestsPerSecond": 19.73,
+        "failedRequests": 0,
+        "p50Ms": 1011,
+        "p95Ms": 1021,
+        "p99Ms": 1023,
+        "completedRequests": 200,
+        "durationSeconds": 10.137,
+        "resources": {
+          "elapsedSeconds": 10.375,
+          "groups": {
+            "ciliumAgent": {
+              "cpuCores": 0.08738920481927712,
+              "memoryWorkingSetBytes": 778866688,
+              "podCount": 3
+            },
+            "obi": {
+              "cpuCores": 0.012847036144578312,
+              "memoryWorkingSetBytes": 266489856,
+              "podCount": 2
+            },
+            "application": {
+              "cpuCores": 0.005761542168674699,
+              "memoryWorkingSetBytes": 7061504,
+              "podCount": 3
+            },
+            "hubble": {
+              "cpuCores": 0.00763855421686747,
+              "memoryWorkingSetBytes": 177315840,
+              "podCount": 2
+            },
+            "collector": {
+              "cpuCores": 0.004629493975903614,
+              "memoryWorkingSetBytes": 79101952,
+              "podCount": 1
+            }
+          }
+        }
+      }
+    ],
+    "summary": {
+      "requestsPerSecond": {
+        "median": 19.73,
+        "min": 19.71,
+        "max": 19.76
+      },
+      "p50Ms": {
+        "median": 1011,
+        "min": 1009,
+        "max": 1012
+      },
+      "p95Ms": {
+        "median": 1020,
+        "min": 1018,
+        "max": 1023
+      },
+      "p99Ms": {
+        "median": 1021,
+        "min": 1019,
+        "max": 1027
+      },
+      "failedRequests": 0,
+      "completedRequests": 1000,
+      "resources": {
+        "application": {
+          "cpuCores": {
+            "median": 0.011239669421487603,
+            "min": 0.004156473085085858,
+            "max": 0.022833701604380825
+          },
+          "memoryWorkingSetBytes": {
+            "median": 7061504,
+            "min": 7032832,
+            "max": 7069696
+          }
+        },
+        "ciliumAgent": {
+          "cpuCores": {
+            "median": 0.11488807762513209,
+            "min": 0.07659879321904031,
+            "max": 0.1492662886796079
+          },
+          "memoryWorkingSetBytes": {
+            "median": 778592256,
+            "min": 777867264,
+            "max": 779038720
+          }
+        },
+        "hubble": {
+          "cpuCores": {
+            "median": 0.021149721314626176,
+            "min": 0.00763855421686747,
+            "max": 0.0896061100970314
+          },
+          "memoryWorkingSetBytes": {
+            "median": 175312896,
+            "min": 169222144,
+            "max": 177315840
+          }
+        },
+        "collector": {
+          "cpuCores": {
+            "median": 0.00618637717359977,
+            "min": 0,
+            "max": 0.007221410724581972
+          },
+          "memoryWorkingSetBytes": {
+            "median": 79101952,
+            "min": 78995456,
+            "max": 79130624
+          }
+        },
+        "obi": {
+          "cpuCores": {
+            "median": 0.012847036144578312,
+            "min": 0.0017844512781087832,
+            "max": 0.17481072737796644
+          },
+          "memoryWorkingSetBytes": {
+            "median": 265461760,
+            "min": 258629632,
+            "max": 267087872
+          }
+        }
+      },
+      "telemetryDelta": {
+        "acceptedSpans": 7210,
+        "exportedSpans": 7210,
+        "hubbleLostEvents": 1083
+      }
+    },
+    "telemetryStart": {
+      "acceptedSpans": 138927,
+      "exportedSpans": 138927,
+      "hubbleLostEvents": 703
+    },
+    "telemetryEnd": {
+      "acceptedSpans": 146137,
+      "exportedSpans": 146137,
+      "hubbleLostEvents": 1786
+    }
+  },
+  "comparison": {
+    "throughputChangePercent": -0.2023267577137,
+    "p95ChangeMs": 2,
+    "p95ChangePercent": 0.19646365422396617
+  },
+  "environment": {
+    "kubernetes": {
+      "clientVersion": {
+        "major": "1",
+        "minor": "35",
+        "gitVersion": "v1.35.1",
+        "gitCommit": "8fea90b45245ef5c8ba54e7ae044d3e777c22500",
+        "gitTreeState": "clean",
+        "buildDate": "2026-02-10T12:53:13Z",
+        "goVersion": "go1.25.7",
+        "compiler": "gc",
+        "platform": "darwin/arm64"
+      },
+      "kustomizeVersion": "v5.7.1",
+      "serverVersion": {
+        "major": "1",
+        "minor": "35",
+        "emulationMajor": "1",
+        "emulationMinor": "35",
+        "minCompatibilityMajor": "1",
+        "minCompatibilityMinor": "34",
+        "gitVersion": "v1.35.0",
+        "gitCommit": "66452049f3d692768c39c797b21b793dce80314e",
+        "gitTreeState": "clean",
+        "buildDate": "2025-12-17T12:32:07Z",
+        "goVersion": "go1.25.5",
+        "compiler": "gc",
+        "platform": "linux/arm64"
+      }
+    },
+    "nodes": [
+      {
+        "name": "obi-cilium-talk-control-plane",
+        "kernelVersion": "6.12.76-linuxkit",
+        "containerRuntimeVersion": "containerd://2.2.0",
+        "kubeletVersion": "v1.35.0"
+      },
+      {
+        "name": "obi-cilium-talk-worker",
+        "kernelVersion": "6.12.76-linuxkit",
+        "containerRuntimeVersion": "containerd://2.2.0",
+        "kubeletVersion": "v1.35.0"
+      },
+      {
+        "name": "obi-cilium-talk-worker2",
+        "kernelVersion": "6.12.76-linuxkit",
+        "containerRuntimeVersion": "containerd://2.2.0",
+        "kubeletVersion": "v1.35.0"
+      }
+    ],
+    "ciliumImage": "quay.io/cilium/cilium:v1.20.2@sha256:2939231d0d3e3ebddcd80fffa168b7ddcc78fdf0dc864d1c8c126ff523c54f01",
+    "obiImage": "ghcr.io/open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument:v0.13.0"
+  }
+}
