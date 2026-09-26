@@ -286,11 +286,70 @@ const pipeline = dashboard(
   ],
 );
 
+function panelFrom(source, title, id, gridPos) {
+  const original = source.dashboard.panels.find((panel) => panel.title === title);
+  if (!original) throw new Error(`Panel ${title} was not found in ${source.dashboard.title}`);
+  return {
+    ...structuredClone(original),
+    id,
+    gridPos,
+  };
+}
+
+const applicationNetwork = dashboard(
+  "cilium-obi-app-network",
+  "Application + Network Correlation",
+  "OBI application telemetry and Hubble network evidence aligned in one troubleshooting view.",
+  [
+    panelFrom(obi, "Request rate", 1, { x: 0, y: 0, w: 6, h: 5 }),
+    panelFrom(obi, "5xx error rate", 2, { x: 6, y: 0, w: 6, h: 5 }),
+    panelFrom(obi, "Server p95", 3, { x: 12, y: 0, w: 6, h: 5 }),
+    panelFrom(hubble, "Drops", 4, { x: 18, y: 0, w: 6, h: 5 }),
+    panelFrom(obi, "Request rate by service", 5, { x: 0, y: 5, w: 12, h: 9 }),
+    panelFrom(obi, "Server latency percentiles", 6, { x: 12, y: 5, w: 12, h: 9 }),
+    panelFrom(pipeline, "Application requests and network flows", 7, { x: 0, y: 14, w: 12, h: 9 }),
+    panelFrom(hubble, "Flows by verdict", 8, { x: 12, y: 14, w: 12, h: 9 }),
+    panelFrom(obi, "Responses by HTTP status", 9, { x: 0, y: 23, w: 12, h: 9 }),
+    panelFrom(obi, "Trace-derived service edges", 10, { x: 12, y: 23, w: 12, h: 9 }),
+    panelFrom(obi, "Busiest routes", 11, { x: 0, y: 32, w: 12, h: 9 }),
+    panelFrom(hubble, "Drops by reason", 12, { x: 12, y: 32, w: 12, h: 9 }),
+    panelFrom(hubble, "TCP flags", 13, { x: 0, y: 41, w: 12, h: 9 }),
+    panelFrom(hubble, "Lost events by source", 14, { x: 12, y: 41, w: 12, h: 9 }),
+  ],
+  [
+    variable("service", "OBI service", "label_values(http_server_request_duration_seconds_count, service_name)"),
+    variable("instance", "Hubble endpoint", "label_values(hubble_flows_processed_total, instance)"),
+  ],
+);
+
+const platformPipeline = dashboard(
+  "cilium-obi-platform",
+  "Platform + Telemetry Pipeline Health",
+  "Cilium datapath health, eBPF resource cost, and OpenTelemetry delivery in one operator view.",
+  [
+    panelFrom(cilium, "Forwarded packets", 1, { x: 0, y: 0, w: 6, h: 5 }),
+    panelFrom(cilium, "Datapath drops", 2, { x: 6, y: 0, w: 6, h: 5 }),
+    panelFrom(cilium, "Failing controllers", 3, { x: 12, y: 0, w: 6, h: 5 }),
+    panelFrom(pipeline, "Loss or refusal rate", 4, { x: 18, y: 0, w: 6, h: 5 }),
+    panelFrom(cilium, "Forwarding by direction", 5, { x: 0, y: 5, w: 12, h: 9 }),
+    panelFrom(cilium, "Drops by reason", 6, { x: 12, y: 5, w: 12, h: 9 }),
+    panelFrom(cilium, "BPF map pressure", 7, { x: 0, y: 14, w: 12, h: 9 }),
+    panelFrom(cilium, "Agent CPU", 8, { x: 12, y: 14, w: 12, h: 9 }),
+    panelFrom(cilium, "Agent resident memory", 9, { x: 0, y: 23, w: 12, h: 9 }),
+    panelFrom(cilium, "Errors and warnings", 10, { x: 12, y: 23, w: 12, h: 9 }),
+    panelFrom(cilium, "Endpoint states", 11, { x: 0, y: 32, w: 12, h: 9 }),
+    panelFrom(cilium, "Policy enforcement", 12, { x: 12, y: 32, w: 12, h: 9 }),
+    panelFrom(pipeline, "Collector metric pipeline", 13, { x: 0, y: 41, w: 12, h: 9 }),
+    panelFrom(pipeline, "Collector trace pipeline", 14, { x: 12, y: 41, w: 12, h: 9 }),
+    panelFrom(pipeline, "Refused or failed telemetry", 15, { x: 0, y: 50, w: 12, h: 9 }),
+    panelFrom(pipeline, "Loss indicators", 16, { x: 12, y: 50, w: 12, h: 9 }),
+  ],
+  [variable("instance", "Cilium endpoint", "label_values(cilium_version, instance)")],
+);
+
 const outputs = [
-  ["obi-application.json", obi],
-  ["hubble-network.json", hubble],
-  ["cilium-datapath.json", cilium],
-  ["telemetry-pipeline.json", pipeline],
+  ["application-network.json", applicationNetwork],
+  ["platform-pipeline.json", platformPipeline],
 ];
 
 for (const [name, content] of outputs) {

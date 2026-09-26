@@ -14,6 +14,18 @@ curl --fail --silent --show-error \
   --retry-delay 1 \
   "${GRAFANA_URL}/api/health" >/dev/null
 
+# Remove the four superseded single-system dashboards after consolidation.
+for uid in \
+  cilium-obi-application \
+  cilium-obi-hubble \
+  cilium-obi-cilium \
+  cilium-obi-pipeline; do
+  curl --silent --show-error \
+    --user "${GRAFANA_USER}:${GRAFANA_PASSWORD}" \
+    --request DELETE \
+    "${GRAFANA_URL}/api/dashboards/uid/${uid}" >/dev/null
+done
+
 for dashboard in "${DASHBOARD_DIR}"/*.json; do
   printf 'importing %s\n' "$(basename "${dashboard}")"
   curl --fail-with-body --silent --show-error \

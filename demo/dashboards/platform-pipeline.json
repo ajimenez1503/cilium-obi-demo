@@ -1,9 +1,9 @@
 {
   "dashboard": {
     "id": null,
-    "uid": "cilium-obi-cilium",
-    "title": "Cilium Datapath and Agent Health",
-    "description": "Forwarding, drops, BPF maps, endpoints, policy, controller health, and agent resources.",
+    "uid": "cilium-obi-platform",
+    "title": "Platform + Telemetry Pipeline Health",
+    "description": "Cilium datapath health, eBPF resource cost, and OpenTelemetry delivery in one operator view.",
     "tags": [
       "cilium-obi-demo",
       "ebpf"
@@ -249,8 +249,8 @@
       {
         "id": 4,
         "type": "stat",
-        "title": "Ready endpoints",
-        "description": "Cilium-managed endpoints in ready state.",
+        "title": "Loss or refusal rate",
+        "description": "Hubble lost events plus Collector refused points and spans.",
         "gridPos": {
           "x": 18,
           "y": 0,
@@ -264,14 +264,14 @@
         "targets": [
           {
             "refId": "A",
-            "expr": "sum(cilium_endpoint_state{instance=~\"$instance\",endpoint_state=\"ready\"})",
+            "expr": "sum(rate(hubble_lost_events_total[$__rate_interval])) + sum(rate(otelcol_receiver_refused_metric_points_total[$__rate_interval])) + sum(rate(otelcol_receiver_refused_spans_total[$__rate_interval]))",
             "legendFormat": "",
             "instant": true
           }
         ],
         "fieldConfig": {
           "defaults": {
-            "unit": "short",
+            "unit": "ops",
             "color": {
               "mode": "thresholds"
             },
@@ -281,6 +281,10 @@
                 {
                   "color": "green",
                   "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0.001
                 }
               ]
             }
@@ -661,7 +665,7 @@
         "gridPos": {
           "x": 0,
           "y": 32,
-          "w": 8,
+          "w": 12,
           "h": 9
         },
         "datasource": {
@@ -707,9 +711,9 @@
         "title": "Policy enforcement",
         "description": "Current endpoint policy enforcement modes.",
         "gridPos": {
-          "x": 8,
+          "x": 12,
           "y": 32,
-          "w": 8,
+          "w": 12,
           "h": 9
         },
         "datasource": {
@@ -752,12 +756,12 @@
       {
         "id": 13,
         "type": "timeseries",
-        "title": "Policy implementation p95",
-        "description": "95th percentile policy implementation delay.",
+        "title": "Collector metric pipeline",
+        "description": "Metric points accepted by receiver and sent by exporter.",
         "gridPos": {
-          "x": 16,
-          "y": 32,
-          "w": 8,
+          "x": 0,
+          "y": 41,
+          "w": 12,
           "h": 9
         },
         "datasource": {
@@ -767,13 +771,222 @@
         "targets": [
           {
             "refId": "A",
-            "expr": "histogram_quantile(0.95, sum by (le) (rate(cilium_policy_implementation_delay_bucket{instance=~\"$instance\"}[$__rate_interval])))",
-            "legendFormat": "p95"
+            "expr": "sum by (receiver) (rate(otelcol_receiver_accepted_metric_points_total[$__rate_interval]))",
+            "legendFormat": "accepted {{receiver}}"
+          },
+          {
+            "refId": "B",
+            "expr": "sum by (exporter) (rate(otelcol_exporter_sent_metric_points_total[$__rate_interval]))",
+            "legendFormat": "sent {{exporter}}"
           }
         ],
         "fieldConfig": {
           "defaults": {
-            "unit": "s",
+            "unit": "ops",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 14,
+        "type": "timeseries",
+        "title": "Collector trace pipeline",
+        "description": "Spans accepted by receiver and sent by exporter.",
+        "gridPos": {
+          "x": 12,
+          "y": 41,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (receiver) (rate(otelcol_receiver_accepted_spans_total[$__rate_interval]))",
+            "legendFormat": "accepted {{receiver}}"
+          },
+          {
+            "refId": "B",
+            "expr": "sum by (exporter) (rate(otelcol_exporter_sent_spans_total[$__rate_interval]))",
+            "legendFormat": "sent {{exporter}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 15,
+        "type": "timeseries",
+        "title": "Refused or failed telemetry",
+        "description": "Receiver refusal and failure counters for metrics and spans.",
+        "gridPos": {
+          "x": 0,
+          "y": 50,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (receiver) (rate(otelcol_receiver_refused_metric_points_total[$__rate_interval]))",
+            "legendFormat": "refused metrics {{receiver}}"
+          },
+          {
+            "refId": "B",
+            "expr": "sum by (receiver) (rate(otelcol_receiver_failed_metric_points_total[$__rate_interval]))",
+            "legendFormat": "failed metrics {{receiver}}"
+          },
+          {
+            "refId": "C",
+            "expr": "sum by (receiver) (rate(otelcol_receiver_refused_spans_total[$__rate_interval]))",
+            "legendFormat": "refused spans {{receiver}}"
+          },
+          {
+            "refId": "D",
+            "expr": "sum by (receiver) (rate(otelcol_receiver_failed_spans_total[$__rate_interval]))",
+            "legendFormat": "failed spans {{receiver}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 16,
+        "type": "timeseries",
+        "title": "Loss indicators",
+        "description": "Hubble event loss and Collector receiver refusal rates.",
+        "gridPos": {
+          "x": 12,
+          "y": 50,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (source) (rate(hubble_lost_events_total[$__rate_interval]))",
+            "legendFormat": "Hubble {{source}}"
+          },
+          {
+            "refId": "B",
+            "expr": "sum by (receiver) (rate(otelcol_receiver_refused_metric_points_total[$__rate_interval]))",
+            "legendFormat": "metrics {{receiver}}"
+          },
+          {
+            "refId": "C",
+            "expr": "sum by (receiver) (rate(otelcol_receiver_refused_spans_total[$__rate_interval]))",
+            "legendFormat": "spans {{receiver}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops",
             "color": {
               "mode": "palette-classic"
             },
@@ -810,5 +1023,5 @@
     ]
   },
   "overwrite": true,
-  "message": "Provision Cilium Datapath and Agent Health"
+  "message": "Provision Platform + Telemetry Pipeline Health"
 }

@@ -80,24 +80,21 @@ Import the dashboard suite after the Grafana port-forward is ready:
 ./demo/import-dashboards.sh
 ```
 
-The suite contains five dashboards:
+The suite contains three dashboards:
 
 - **Cilium + OBI Live Demo**: compact presentation overview.
-- **OBI Application Telemetry**: request rate, errors, latency percentiles,
-  body sizes, routes, client/server observations, and trace-derived service
-  edges.
-- **Hubble Network Telemetry**: flows by verdict, protocol, observation point,
-  and node, plus drops, TCP flags, ICMP, and lost events.
-- **Cilium Datapath and Agent Health**: forwarding, drops, BPF map pressure,
-  endpoint and policy state, controller health, CPU, and memory.
-- **eBPF Telemetry Pipeline Health**: cross-system volume, Collector delivery,
-  queueing, refusal, resource cost, and loss indicators.
+- **Application + Network Correlation**: OBI request rate, errors, latency,
+  routes, and service edges beside Hubble flows, verdicts, drops, TCP flags,
+  and event loss.
+- **Platform + Telemetry Pipeline Health**: Cilium forwarding, drops, BPF map
+  pressure, endpoints, policy, CPU, and memory beside Collector delivery,
+  refusal, and loss indicators.
 
 Open the dashboard search at <http://localhost:3000/dashboards> and filter by
 the `cilium-obi-demo` tag. Every dashboard also includes a navigation dropdown
 for the complete suite.
 
-To regenerate the four detailed dashboard JSON files after editing the source:
+To regenerate the two detailed dashboard JSON files after editing the source:
 
 ```bash
 node scripts/generate-dashboards.mjs

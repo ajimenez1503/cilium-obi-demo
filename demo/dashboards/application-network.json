@@ -1,9 +1,9 @@
 {
   "dashboard": {
     "id": null,
-    "uid": "cilium-obi-application",
-    "title": "OBI Application Telemetry",
-    "description": "Zero-code HTTP metrics and trace-derived service relationships emitted by OBI.",
+    "uid": "cilium-obi-app-network",
+    "title": "Application + Network Correlation",
+    "description": "OBI application telemetry and Hubble network evidence aligned in one troubleshooting view.",
     "tags": [
       "cilium-obi-demo",
       "ebpf"
@@ -44,6 +44,35 @@
             "refId": "var-service"
           },
           "definition": "label_values(http_server_request_duration_seconds_count, service_name)",
+          "refresh": 1,
+          "sort": 1,
+          "multi": true,
+          "includeAll": true,
+          "allValue": ".*",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "options": []
+        },
+        {
+          "name": "instance",
+          "label": "Hubble endpoint",
+          "type": "query",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "query": {
+            "query": "label_values(hubble_flows_processed_total, instance)",
+            "refId": "var-instance"
+          },
+          "definition": "label_values(hubble_flows_processed_total, instance)",
           "refresh": 1,
           "sort": 1,
           "multi": true,
@@ -245,8 +274,8 @@
       {
         "id": 4,
         "type": "stat",
-        "title": "Instrumented services",
-        "description": "Distinct services currently emitting OBI HTTP server metrics.",
+        "title": "Drops",
+        "description": "Hubble drop events per second.",
         "gridPos": {
           "x": 18,
           "y": 0,
@@ -260,14 +289,14 @@
         "targets": [
           {
             "refId": "A",
-            "expr": "count(count by (service_name) (http_server_request_duration_seconds_count{service_name=~\"$service\"}))",
+            "expr": "sum(rate(hubble_drop_total{instance=~\"$instance\"}[$__rate_interval]))",
             "legendFormat": "",
             "instant": true
           }
         ],
         "fieldConfig": {
           "defaults": {
-            "unit": "short",
+            "unit": "ops",
             "color": {
               "mode": "thresholds"
             },
@@ -277,6 +306,14 @@
                 {
                   "color": "green",
                   "value": null
+                },
+                {
+                  "color": "orange",
+                  "value": 0.01
+                },
+                {
+                  "color": "red",
+                  "value": 1
                 }
               ]
             }
@@ -428,11 +465,137 @@
       {
         "id": 7,
         "type": "timeseries",
+        "title": "Application requests and network flows",
+        "description": "Application request rate and Hubble flow processing rate. Different units of work, shown together for timing correlation.",
+        "gridPos": {
+          "x": 0,
+          "y": 14,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum(rate(http_server_request_duration_seconds_count[$__rate_interval]))",
+            "legendFormat": "OBI server requests/s"
+          },
+          {
+            "refId": "B",
+            "expr": "sum(rate(hubble_flows_processed_total[$__rate_interval]))",
+            "legendFormat": "Hubble flows/s"
+          },
+          {
+            "refId": "C",
+            "expr": "sum(rate(cilium_forward_count_total[$__rate_interval]))",
+            "legendFormat": "Cilium forwarded packets/s"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 8,
+        "type": "timeseries",
+        "title": "Flows by verdict",
+        "description": "Processed Hubble flow rate grouped by verdict.",
+        "gridPos": {
+          "x": 12,
+          "y": 14,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (verdict) (rate(hubble_flows_processed_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "{{verdict}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "normal",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 9,
+        "type": "timeseries",
         "title": "Responses by HTTP status",
         "description": "Request rate grouped by response status and service.",
         "gridPos": {
           "x": 0,
-          "y": 14,
+          "y": 23,
           "w": 12,
           "h": 9
         },
@@ -484,187 +647,13 @@
         }
       },
       {
-        "id": 8,
-        "type": "timeseries",
-        "title": "Server and client spans",
-        "description": "Compare server-side observations with downstream client calls.",
-        "gridPos": {
-          "x": 12,
-          "y": 14,
-          "w": 12,
-          "h": 9
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "prometheus"
-        },
-        "targets": [
-          {
-            "refId": "A",
-            "expr": "sum by (service_name) (rate(http_server_request_duration_seconds_count{service_name=~\"$service\"}[$__rate_interval]))",
-            "legendFormat": "server {{service_name}}"
-          },
-          {
-            "refId": "B",
-            "expr": "sum by (service_name) (rate(http_client_request_duration_seconds_count{service_name=~\"$service\"}[$__rate_interval]))",
-            "legendFormat": "client {{service_name}}"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "reqps",
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "drawStyle": "line",
-              "lineInterpolation": "smooth",
-              "lineWidth": 2,
-              "fillOpacity": 12,
-              "showPoints": "never",
-              "spanNulls": true,
-              "stacking": {
-                "mode": "none",
-                "group": "A"
-              }
-            }
-          },
-          "overrides": []
-        },
-        "options": {
-          "legend": {
-            "displayMode": "table",
-            "placement": "bottom",
-            "calcs": [
-              "lastNotNull",
-              "max"
-            ]
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "desc"
-          }
-        }
-      },
-      {
-        "id": 9,
-        "type": "timeseries",
-        "title": "Average HTTP body size",
-        "description": "Average request and response body sizes calculated from OBI histograms.",
-        "gridPos": {
-          "x": 0,
-          "y": 23,
-          "w": 12,
-          "h": 9
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "prometheus"
-        },
-        "targets": [
-          {
-            "refId": "A",
-            "expr": "sum by (service_name) (rate(http_server_request_body_size_bytes_sum{service_name=~\"$service\"}[$__rate_interval])) / clamp_min(sum by (service_name) (rate(http_server_request_body_size_bytes_count{service_name=~\"$service\"}[$__rate_interval])), 0.000001)",
-            "legendFormat": "request {{service_name}}"
-          },
-          {
-            "refId": "B",
-            "expr": "sum by (service_name) (rate(http_server_response_body_size_bytes_sum{service_name=~\"$service\"}[$__rate_interval])) / clamp_min(sum by (service_name) (rate(http_server_response_body_size_bytes_count{service_name=~\"$service\"}[$__rate_interval])), 0.000001)",
-            "legendFormat": "response {{service_name}}"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "bytes",
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "drawStyle": "line",
-              "lineInterpolation": "smooth",
-              "lineWidth": 2,
-              "fillOpacity": 12,
-              "showPoints": "never",
-              "spanNulls": true,
-              "stacking": {
-                "mode": "none",
-                "group": "A"
-              }
-            }
-          },
-          "overrides": []
-        },
-        "options": {
-          "legend": {
-            "displayMode": "table",
-            "placement": "bottom",
-            "calcs": [
-              "lastNotNull",
-              "max"
-            ]
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "desc"
-          }
-        }
-      },
-      {
         "id": 10,
-        "type": "bargauge",
-        "title": "Busiest routes",
-        "description": "Current request rate by normalized HTTP route.",
-        "gridPos": {
-          "x": 12,
-          "y": 23,
-          "w": 12,
-          "h": 9
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "prometheus"
-        },
-        "targets": [
-          {
-            "refId": "A",
-            "expr": "topk(10, sum by (service_name, http_route) (rate(http_server_request_duration_seconds_count{service_name=~\"$service\"}[$__rate_interval])))",
-            "legendFormat": "{{service_name}} {{http_route}}",
-            "instant": true
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "unit": "reqps",
-            "color": {
-              "mode": "continuous-BlPu"
-            }
-          },
-          "overrides": []
-        },
-        "options": {
-          "orientation": "horizontal",
-          "displayMode": "gradient",
-          "showUnfilled": true,
-          "valueMode": "color",
-          "minVizWidth": 8,
-          "minVizHeight": 16,
-          "reduceOptions": {
-            "values": false,
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": ""
-          }
-        }
-      },
-      {
-        "id": 11,
         "type": "timeseries",
         "title": "Trace-derived service edges",
         "description": "Service graph request rate generated from OBI spans in Tempo.",
         "gridPos": {
-          "x": 0,
-          "y": 32,
+          "x": 12,
+          "y": 23,
           "w": 12,
           "h": 9
         },
@@ -716,10 +705,58 @@
         }
       },
       {
+        "id": 11,
+        "type": "bargauge",
+        "title": "Busiest routes",
+        "description": "Current request rate by normalized HTTP route.",
+        "gridPos": {
+          "x": 0,
+          "y": 32,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "topk(10, sum by (service_name, http_route) (rate(http_server_request_duration_seconds_count{service_name=~\"$service\"}[$__rate_interval])))",
+            "legendFormat": "{{service_name}} {{http_route}}",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "reqps",
+            "color": {
+              "mode": "continuous-BlPu"
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "orientation": "horizontal",
+          "displayMode": "gradient",
+          "showUnfilled": true,
+          "valueMode": "color",
+          "minVizWidth": 8,
+          "minVizHeight": 16,
+          "reduceOptions": {
+            "values": false,
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": ""
+          }
+        }
+      },
+      {
         "id": 12,
         "type": "timeseries",
-        "title": "Failed service edges",
-        "description": "Failed service graph requests generated from OBI spans.",
+        "title": "Drops by reason",
+        "description": "Network drops reported by Hubble, grouped by reason and protocol.",
         "gridPos": {
           "x": 12,
           "y": 32,
@@ -733,13 +770,129 @@
         "targets": [
           {
             "refId": "A",
-            "expr": "sum by (client, server) (rate(traces_service_graph_request_failed_total[$__rate_interval]))",
-            "legendFormat": "{{client}} to {{server}}"
+            "expr": "sum by (reason, protocol) (rate(hubble_drop_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "{{reason}} {{protocol}}"
           }
         ],
         "fieldConfig": {
           "defaults": {
-            "unit": "reqps",
+            "unit": "ops",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 13,
+        "type": "timeseries",
+        "title": "TCP flags",
+        "description": "TCP flag activity observed by Hubble.",
+        "gridPos": {
+          "x": 0,
+          "y": 41,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (flag, family) (rate(hubble_tcp_flags_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "{{family}} {{flag}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 14,
+        "type": "timeseries",
+        "title": "Lost events by source",
+        "description": "Event loss grouped by the Hubble internal source.",
+        "gridPos": {
+          "x": 12,
+          "y": 41,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (source) (rate(hubble_lost_events_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "{{source}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops",
             "color": {
               "mode": "palette-classic"
             },
@@ -776,5 +929,5 @@
     ]
   },
   "overwrite": true,
-  "message": "Provision OBI Application Telemetry"
+  "message": "Provision Application + Network Correlation"
 }
