@@ -1,0 +1,814 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "cilium-obi-cilium",
+    "title": "Cilium Datapath and Agent Health",
+    "description": "Forwarding, drops, BPF maps, endpoints, policy, controller health, and agent resources.",
+    "tags": [
+      "cilium-obi-demo",
+      "ebpf"
+    ],
+    "timezone": "browser",
+    "schemaVersion": 42,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-15m",
+      "to": "now"
+    },
+    "links": [
+      {
+        "type": "dashboards",
+        "title": "Cilium + OBI dashboards",
+        "tags": [
+          "cilium-obi-demo"
+        ],
+        "asDropdown": true,
+        "includeVars": false,
+        "keepTime": true,
+        "targetBlank": false
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "instance",
+          "label": "Cilium endpoint",
+          "type": "query",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "query": {
+            "query": "label_values(cilium_version, instance)",
+            "refId": "var-instance"
+          },
+          "definition": "label_values(cilium_version, instance)",
+          "refresh": 1,
+          "sort": 1,
+          "multi": true,
+          "includeAll": true,
+          "allValue": ".*",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "options": []
+        }
+      ]
+    },
+    "panels": [
+      {
+        "id": 1,
+        "type": "stat",
+        "title": "Forwarded packets",
+        "description": "Cilium forwarded packets per second.",
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 6,
+          "h": 5
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum(rate(cilium_forward_count_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "pps",
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "blue",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "orientation": "auto",
+          "textMode": "auto",
+          "colorMode": "background",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "wideLayout": true
+        }
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Datapath drops",
+        "description": "Cilium datapath drops per second.",
+        "gridPos": {
+          "x": 6,
+          "y": 0,
+          "w": 6,
+          "h": 5
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum(rate(cilium_drop_count_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "pps",
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "orange",
+                  "value": 0.01
+                },
+                {
+                  "color": "red",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "orientation": "auto",
+          "textMode": "auto",
+          "colorMode": "background",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "wideLayout": true
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Failing controllers",
+        "description": "Current count of failing Cilium controllers.",
+        "gridPos": {
+          "x": 12,
+          "y": 0,
+          "w": 6,
+          "h": 5
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum(cilium_controllers_failing{instance=~\"$instance\"})",
+            "legendFormat": "",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "orientation": "auto",
+          "textMode": "auto",
+          "colorMode": "background",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "wideLayout": true
+        }
+      },
+      {
+        "id": 4,
+        "type": "stat",
+        "title": "Ready endpoints",
+        "description": "Cilium-managed endpoints in ready state.",
+        "gridPos": {
+          "x": 18,
+          "y": 0,
+          "w": 6,
+          "h": 5
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum(cilium_endpoint_state{instance=~\"$instance\",endpoint_state=\"ready\"})",
+            "legendFormat": "",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "color": {
+              "mode": "thresholds"
+            },
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "orientation": "auto",
+          "textMode": "auto",
+          "colorMode": "background",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "wideLayout": true
+        }
+      },
+      {
+        "id": 5,
+        "type": "timeseries",
+        "title": "Forwarding by direction",
+        "description": "Forwarded packets grouped by ingress and egress.",
+        "gridPos": {
+          "x": 0,
+          "y": 5,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (direction) (rate(cilium_forward_count_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "{{direction}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "pps",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 6,
+        "type": "timeseries",
+        "title": "Drops by reason",
+        "description": "Datapath drops grouped by direction and reason.",
+        "gridPos": {
+          "x": 12,
+          "y": 5,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (direction, reason) (rate(cilium_drop_count_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "{{direction}} {{reason}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "pps",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "type": "timeseries",
+        "title": "BPF map pressure",
+        "description": "Map occupancy relative to capacity. Values close to 100 percent need attention.",
+        "gridPos": {
+          "x": 0,
+          "y": 14,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "max by (instance, map_name) (cilium_bpf_map_pressure{instance=~\"$instance\"})",
+            "legendFormat": "{{instance}} {{map_name}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percentunit",
+            "min": 0,
+            "max": 1,
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 8,
+        "type": "timeseries",
+        "title": "Agent CPU",
+        "description": "Cilium agent CPU consumption by metrics endpoint.",
+        "gridPos": {
+          "x": 12,
+          "y": 14,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "rate(cilium_process_cpu_seconds_total{instance=~\"$instance\"}[$__rate_interval])",
+            "legendFormat": "{{instance}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "cores",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 9,
+        "type": "timeseries",
+        "title": "Agent resident memory",
+        "description": "Cilium agent resident memory by metrics endpoint.",
+        "gridPos": {
+          "x": 0,
+          "y": 23,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "cilium_process_resident_memory_bytes{instance=~\"$instance\"}",
+            "legendFormat": "{{instance}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "bytes",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 10,
+        "type": "timeseries",
+        "title": "Errors and warnings",
+        "description": "New Cilium error and warning log events by subsystem.",
+        "gridPos": {
+          "x": 12,
+          "y": 23,
+          "w": 12,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (level, subsystem) (rate(cilium_errors_warnings_total{instance=~\"$instance\"}[$__rate_interval]))",
+            "legendFormat": "{{level}} {{subsystem}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      },
+      {
+        "id": 11,
+        "type": "bargauge",
+        "title": "Endpoint states",
+        "description": "Current endpoint count grouped by state.",
+        "gridPos": {
+          "x": 0,
+          "y": 32,
+          "w": 8,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (endpoint_state) (cilium_endpoint_state{instance=~\"$instance\"})",
+            "legendFormat": "{{endpoint_state}}",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "color": {
+              "mode": "continuous-BlPu"
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "orientation": "horizontal",
+          "displayMode": "gradient",
+          "showUnfilled": true,
+          "valueMode": "color",
+          "minVizWidth": 8,
+          "minVizHeight": 16,
+          "reduceOptions": {
+            "values": false,
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": ""
+          }
+        }
+      },
+      {
+        "id": 12,
+        "type": "bargauge",
+        "title": "Policy enforcement",
+        "description": "Current endpoint policy enforcement modes.",
+        "gridPos": {
+          "x": 8,
+          "y": 32,
+          "w": 8,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum by (enforcement) (cilium_policy_endpoint_enforcement_status{instance=~\"$instance\"})",
+            "legendFormat": "{{enforcement}}",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "color": {
+              "mode": "continuous-BlPu"
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "orientation": "horizontal",
+          "displayMode": "gradient",
+          "showUnfilled": true,
+          "valueMode": "color",
+          "minVizWidth": 8,
+          "minVizHeight": 16,
+          "reduceOptions": {
+            "values": false,
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": ""
+          }
+        }
+      },
+      {
+        "id": 13,
+        "type": "timeseries",
+        "title": "Policy implementation p95",
+        "description": "95th percentile policy implementation delay.",
+        "gridPos": {
+          "x": 16,
+          "y": 32,
+          "w": 8,
+          "h": 9
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "histogram_quantile(0.95, sum by (le) (rate(cilium_policy_implementation_delay_bucket{instance=~\"$instance\"}[$__rate_interval])))",
+            "legendFormat": "p95"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "lineWidth": 2,
+              "fillOpacity": 12,
+              "showPoints": "never",
+              "spanNulls": true,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              }
+            }
+          },
+          "overrides": []
+        },
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ]
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          }
+        }
+      }
+    ]
+  },
+  "overwrite": true,
+  "message": "Provision Cilium Datapath and Agent Health"
+}

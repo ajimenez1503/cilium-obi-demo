@@ -3,7 +3,7 @@
     "id": null,
     "uid": "cilium-obi-live",
     "title": "Cilium + OBI Live Demo",
-    "tags": ["cilium", "hubble", "obi", "ebpf"],
+    "tags": ["cilium-obi-demo", "cilium", "hubble", "obi", "ebpf"],
     "timezone": "browser",
     "schemaVersion": 42,
     "version": 1,
@@ -12,6 +12,18 @@
       "from": "now-15m",
       "to": "now"
     },
+    "links": [
+      {
+        "type": "dashboards",
+        "title": "Cilium + OBI dashboards",
+        "tags": ["cilium-obi-demo"],
+        "asDropdown": true,
+        "includeVars": false,
+        "keepTime": true,
+        "targetBlank": false
+      }
+    ],
+    "templating": {"list": []},
     "panels": [
       {
         "id": 1,

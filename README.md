@@ -74,18 +74,34 @@ kubectl -n kube-system port-forward svc/hubble-ui 12000:80
 - Grafana: <http://localhost:3000>, credentials `admin` / `admin`
 - Hubble UI: <http://localhost:12000>
 
-Import the included Grafana dashboard after the Grafana port-forward is ready:
+Import the dashboard suite after the Grafana port-forward is ready:
 
 ```bash
-curl --fail-with-body \
-  --user admin:admin \
-  --header 'Content-Type: application/json' \
-  --data @demo/grafana-dashboard.json \
-  http://localhost:3000/api/dashboards/db
+./demo/import-dashboards.sh
 ```
 
-Open the combined dashboard at
-<http://localhost:3000/d/cilium-obi-live/cilium-2b-obi-live-demo>.
+The suite contains five dashboards:
+
+- **Cilium + OBI Live Demo**: compact presentation overview.
+- **OBI Application Telemetry**: request rate, errors, latency percentiles,
+  body sizes, routes, client/server observations, and trace-derived service
+  edges.
+- **Hubble Network Telemetry**: flows by verdict, protocol, observation point,
+  and node, plus drops, TCP flags, ICMP, and lost events.
+- **Cilium Datapath and Agent Health**: forwarding, drops, BPF map pressure,
+  endpoint and policy state, controller health, CPU, and memory.
+- **eBPF Telemetry Pipeline Health**: cross-system volume, Collector delivery,
+  queueing, refusal, resource cost, and loss indicators.
+
+Open the dashboard search at <http://localhost:3000/dashboards> and filter by
+the `cilium-obi-demo` tag. Every dashboard also includes a navigation dropdown
+for the complete suite.
+
+To regenerate the four detailed dashboard JSON files after editing the source:
+
+```bash
+node scripts/generate-dashboards.mjs
+```
 
 If ports `8080` or `3000` are already in use, choose alternatives such as
 `18080:8080` and `13000:3000`, then use the corresponding localhost ports in
