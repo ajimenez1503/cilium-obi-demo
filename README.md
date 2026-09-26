@@ -2,6 +2,13 @@
 
 This repository runs Cilium, Hubble, and OpenTelemetry eBPF Instrumentation (OBI) together on a two-worker kind cluster. It supports the conference session **Two eBPF Systems, One Kubernetes Node**.
 
+## Presentation
+
+The repository keeps the current conference deck at
+[`slides/cilium-obi-session-deck-latest.pptx`](slides/cilium-obi-session-deck-latest.pptx).
+The deck includes the recorded demos, current Grafana captures, speaker notes,
+and the latest rehearsed benchmark results.
+
 The demo answers three operator questions:
 
 1. Did Cilium and OBI attach in a compatible order?

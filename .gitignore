@@ -1,5 +1,6 @@
 .DS_Store
 obi-cilium-demo-upstream/
 *.log
-slides/
+slides/*
+!slides/cilium-obi-session-deck-latest.pptx
 scripts/capture-screenshots.mjs
