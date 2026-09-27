@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "legacy-priority-demo.v1",
+  "stage": "unsafe",
+  "observedAt": "2026-09-27T16:05:17.489Z",
+  "cluster": "obi-cilium-priority-recording",
+  "context": "kind-obi-cilium-priority-recording",
+  "kubernetesVersion": "v1.35.0",
+  "kernelVersion": "6.12.76-linuxkit",
+  "ciliumVersion": "1.20.2",
+  "obiImage": "ghcr.io/open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument:v0.13.0",
+  "ciliumConfig": {
+    "enableTCX": "false",
+    "filterPriority": null
+  },
+  "obiConfigText": "attributes:\n  kubernetes:\n    enable: true\ndiscovery:\n  instrument:\n  - k8s_deployment_name: edge-nginx\n    namespace: obi-nginx-example\nebpf:\n  context_propagation: all\n  traffic_control_backend: tc\nfilter:\n  network:\n    k8s_dst_owner_name:\n      not_match: '{kube*,*jaeger-agent*,*prometheus*,*promtail*,*grafana-agent*}'\n    k8s_src_owner_name:\n      not_match: '{kube*,*jaeger-agent*,*prometheus*,*promtail*,*grafana-agent*}'\nnetwork:\n  enable: true\n  source: tc\notel_metrics_export:\n  endpoint: http://${HOST_IP}:4318\notel_traces_export:\n  endpoint: http://${HOST_IP}:4317\nprometheus_export:\n  path: /metrics\n  port: 9090\ntrace_printer: text\n",
+  "obiDesired": 1,
+  "obiReady": 0,
+  "obiPods": [
+    {
+      "name": "obi-opentelemetry-ebpf-instrumentation-w7h2r",
+      "phase": "Running",
+      "ready": false,
+      "restartCount": 4,
+      "waitingReason": null
+    }
+  ],
+  "testRequestSucceeded": true,
+  "filterPriorities": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "tcOutput": "lxc469d2a5dd0b8\nfilter protocol all pref 1 bpf chain 0 \nfilter protocol all pref 1 bpf chain 0 handle 0x1 cil_from_container-lxc469d2a5dd0b8 direct-action not_in_hw id 17035 name cil_from_contai tag 9b5571acabfdad3a jited \nlxc55257255f500\nfilter protocol all pref 1 bpf chain 0 \nfilter protocol all pref 1 bpf chain 0 handle 0x1 cil_from_container-lxc55257255f500 direct-action not_in_hw id 17040 name cil_from_contai tag 9b5571acabfdad3a jited \nlxc616cd8e36499\nfilter protocol all pref 1 bpf chain 0 \nfilter protocol all pref 1 bpf chain 0 handle 0x1 cil_from_container-lxc616cd8e36499 direct-action not_in_hw id 17068 name cil_from_contai tag 9b5571acabfdad3a jited \nlxc_health\nfilter protocol all pref 1 bpf chain 0 \nfilter protocol all pref 1 bpf chain 0 handle 0x1 cil_from_container-lxc_health direct-action not_in_hw id 17032 name cil_from_contai tag 9b5571acabfdad3a jited \nlxcff58a3ba1f79\nfilter protocol all pref 1 bpf chain 0 \nfilter protocol all pref 1 bpf chain 0 handle 0x1 cil_from_container-lxcff58a3ba1f79 direct-action not_in_hw id 17104 name cil_from_contai tag 9b5571acabfdad3a jited",
+  "obiCompatibilityError": "Cilium compatibility error: detected Cilium TC with priority 1 - Cilium may clobber OBI",
+  "obiHttpSpan": null,
+  "obiLogs": "time=2026-09-27T16:04:58.368Z level=INFO msg=\"OpenTelemetry eBPF Instrumentation\" Version=v0.13.0 Revision=3cc1986 \"OpenTelemetry SDK Version\"=1.46.0\ntime=2026-09-27T16:04:58.368Z level=INFO msg=\"configuration loaded\" version=v1\ntime=2026-09-27T16:04:58.401Z level=ERROR msg=\"wrong configuration\" error=\"Cilium compatibility error: detected Cilium TC with priority 1 - Cilium may clobber OBI\""
+}

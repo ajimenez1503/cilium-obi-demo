@@ -1,0 +1,16 @@
+ipam:
+  mode: kubernetes
+
+bpf:
+  enableTCX: false
+  datapathMode: veth
+
+hubble:
+  enabled: true
+  relay:
+    enabled: false
+  ui:
+    enabled: false
+
+operator:
+  replicas: 1

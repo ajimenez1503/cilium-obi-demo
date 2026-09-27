@@ -1,0 +1,36 @@
+namespaceOverride: obi-nginx-example
+
+image:
+  registry: ghcr.io
+  repository: open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument
+  tag: v0.13.0
+  digest: ""
+
+preset: application
+privileged: true
+
+contextPropagation:
+  enabled: true
+
+config:
+  create: true
+  data:
+    trace_printer: text
+    attributes:
+      kubernetes:
+        enable: true
+    discovery:
+      instrument:
+        - namespace: obi-nginx-example
+          k8s_deployment_name: edge-nginx
+    network:
+      enable: true
+      source: tc
+    ebpf:
+      context_propagation: all
+      traffic_control_backend: tc
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi

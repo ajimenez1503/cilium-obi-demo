@@ -185,7 +185,7 @@ docker exec obi-cilium-legacy-worker sh -c \
   'for device in $(ls /sys/class/net | grep ^veth | head -3); do tc filter show dev "$device" ingress; done'
 ```
 
-For the guardrail demonstration, use `demo/cilium-values-legacy-unsafe.yaml`. Cilium keeps priority 1, so OBI is expected to reject the conflicting configuration.
+For the recorded guardrail demonstration, see [the priority comparison runbook](demo/legacy-priority-recording.md) and [the video](slides/recordings/demo-4-legacy-priority.mp4). It uses OBI v0.13.0 with optional `network.source: tc`. In that mode, Cilium priority 1 triggered OBI's compatibility guard. An app-only OBI run with the same Cilium priority remained ready, so do not describe this as a universal OBI startup failure. The two JSON captures under `evidence/legacy-priority-2026-09-27/` contain the actual node filters, OBI logs, readiness, and HTTP evidence.
 
 ## Cleanup
 
