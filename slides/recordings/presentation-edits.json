@@ -1,0 +1,51 @@
+{
+  "recorded": "2026-09-26",
+  "edited": "2026-10-29",
+  "success": {
+    "durationSeconds": 29.76,
+    "sections": [
+      {
+        "view": "Grafana upper dashboard",
+        "output": [
+          0,
+          8
+        ],
+        "source": [
+          23,
+          28.16
+        ],
+        "finalFrameHoldSeconds": 2.84
+      },
+      {
+        "view": "Grafana lower dashboard",
+        "output": [
+          8,
+          20
+        ],
+        "source": [
+          28.4,
+          33.2
+        ],
+        "finalFrameHoldSeconds": 7.2
+      },
+      {
+        "view": "Hubble UI",
+        "outputStart": 20,
+        "source": [
+          37.32,
+          47.08
+        ],
+        "speed": 1
+      }
+    ]
+  },
+  "denial": {
+    "durationSeconds": 19.8,
+    "view": "Terminal only",
+    "source": [
+      0,
+      19.8
+    ]
+  },
+  "note": "Reading holds repeat original UI frames. No telemetry values, verdicts, or timestamps were changed. The denial recording ends before Grafana and does not show recovery."
+}
