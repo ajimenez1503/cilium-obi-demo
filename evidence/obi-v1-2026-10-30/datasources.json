@@ -1,0 +1,114 @@
+[
+  {
+    "id": 3,
+    "uid": "loki",
+    "orgId": 1,
+    "name": "Loki",
+    "type": "loki",
+    "typeName": "Loki",
+    "typeLogoUrl": "public/plugins/loki/img/loki_icon.svg",
+    "access": "proxy",
+    "url": "http://127.0.0.1:3100",
+    "user": "",
+    "database": "",
+    "basicAuth": false,
+    "isDefault": false,
+    "jsonData": {
+      "derivedFields": [
+        {
+          "datasourceUid": "tempo",
+          "matcherRegex": "trace_id",
+          "matcherType": "label",
+          "name": "trace_id",
+          "url": "${__value.raw}",
+          "urlDisplayLabel": "Trace: ${__value.raw}"
+        }
+      ]
+    },
+    "readOnly": false
+  },
+  {
+    "id": 1,
+    "uid": "prometheus",
+    "orgId": 1,
+    "name": "Prometheus",
+    "type": "prometheus",
+    "typeName": "Prometheus",
+    "typeLogoUrl": "public/plugins/prometheus/img/prometheus_logo.svg",
+    "access": "proxy",
+    "url": "http://127.0.0.1:9090",
+    "user": "",
+    "database": "",
+    "basicAuth": false,
+    "isDefault": true,
+    "jsonData": {
+      "exemplarTraceIdDestinations": [
+        {
+          "datasourceUid": "tempo",
+          "name": "trace_id",
+          "urlDisplayLabel": "Trace: ${__value.raw}"
+        }
+      ],
+      "timeInterval": "60s"
+    },
+    "readOnly": false
+  },
+  {
+    "id": 4,
+    "uid": "pyroscope",
+    "orgId": 1,
+    "name": "Pyroscope",
+    "type": "grafana-pyroscope-datasource",
+    "typeName": "Grafana Pyroscope",
+    "typeLogoUrl": "public/plugins/grafana-pyroscope-datasource/img/grafana_pyroscope_icon.svg",
+    "access": "proxy",
+    "url": "http://127.0.0.1:4040",
+    "user": "",
+    "database": "",
+    "basicAuth": false,
+    "isDefault": false,
+    "jsonData": {},
+    "readOnly": true
+  },
+  {
+    "id": 2,
+    "uid": "tempo",
+    "orgId": 1,
+    "name": "Tempo",
+    "type": "tempo",
+    "typeName": "Tempo",
+    "typeLogoUrl": "public/plugins/tempo/img/tempo_logo.svg",
+    "access": "proxy",
+    "url": "http://127.0.0.1:3200",
+    "user": "",
+    "database": "",
+    "basicAuth": false,
+    "isDefault": false,
+    "jsonData": {
+      "lokiSearch": {
+        "datasourceUid": "loki"
+      },
+      "nodeGraph": {
+        "enabled": true
+      },
+      "search": {
+        "hide": false
+      },
+      "serviceMap": {
+        "datasourceUid": "prometheus"
+      },
+      "tracesToLogsV2": {
+        "customQuery": true,
+        "datasourceUid": "loki",
+        "query": "{${__tags}} | trace_id = \"${__trace.traceId}\"",
+        "tags": [
+          {
+            "key": "service.name",
+            "value": "service_name"
+          }
+        ]
+      }
+    },
+    "readOnly": false
+  }
+]

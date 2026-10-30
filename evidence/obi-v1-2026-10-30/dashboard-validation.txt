@@ -1,0 +1,1 @@
+Validated 3 dashboards, 36 panels, and 47 PromQL queries; 47 queries returned live series.

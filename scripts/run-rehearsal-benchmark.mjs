@@ -205,7 +205,7 @@ try {
   kubectl(["-n", namespace, "patch", "daemonset", obiDaemonSet, "--type=json", "-p", '[{"op":"remove","path":"/spec/template/spec/nodeSelector"}]']);
   kubectl(["-n", namespace, "rollout", "status", `daemonset/${obiDaemonSet}`, "--timeout=180s"], { timeout: 200000 });
   await sleep(10000);
-  combined = await runCondition("D", "Cilium, Hubble, and OBI with TCX propagation");
+  combined = await runCondition("D", "Cilium, Hubble, and OBI application telemetry with socket propagation");
 } finally {
   try {
     const current = JSON.parse(kubectl(["-n", namespace, "get", "daemonset", obiDaemonSet, "-o", "json"]));

@@ -1,0 +1,239 @@
+{
+  "collectedAt": "2026-10-30T19:07:18.400Z",
+  "kind": "smoke-test",
+  "benchmark": false,
+  "context": "kind-obi-cilium-v1",
+  "obiImage": [
+    "ghcr.io/open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument:v1.0.0"
+  ],
+  "obiReadiness": {
+    "ready": 2,
+    "desired": 2
+  },
+  "ciliumReadiness": {
+    "ready": 3,
+    "desired": 3
+  },
+  "ciliumImages": [
+    "quay.io/cilium/cilium:v1.20.2@sha256:2939231d0d3e3ebddcd80fffa168b7ddcc78fdf0dc864d1c8c126ff523c54f01"
+  ],
+  "ciliumConfig": {
+    "enableTCX": "true",
+    "datapathMode": "veth",
+    "routingMode": "tunnel"
+  },
+  "nodes": [
+    {
+      "name": "obi-cilium-v1-control-plane",
+      "ready": "True",
+      "architecture": "arm64",
+      "bootID": "6c32b906-81f3-475e-b1ee-f69552e9212d",
+      "containerRuntimeVersion": "containerd://2.2.0",
+      "kernelVersion": "6.12.76-linuxkit",
+      "kubeProxyVersion": "",
+      "kubeletVersion": "v1.35.0",
+      "machineID": "c266eaa1ab964163baaec12d49475e24",
+      "operatingSystem": "linux",
+      "osImage": "Debian GNU/Linux 12 (bookworm)",
+      "swap": {
+        "capacity": 1073737728
+      },
+      "systemUUID": "c266eaa1ab964163baaec12d49475e24"
+    },
+    {
+      "name": "obi-cilium-v1-worker",
+      "ready": "True",
+      "architecture": "arm64",
+      "bootID": "6c32b906-81f3-475e-b1ee-f69552e9212d",
+      "containerRuntimeVersion": "containerd://2.2.0",
+      "kernelVersion": "6.12.76-linuxkit",
+      "kubeProxyVersion": "",
+      "kubeletVersion": "v1.35.0",
+      "machineID": "a03269a2b5284148b82f1c5a33dc2fbd",
+      "operatingSystem": "linux",
+      "osImage": "Debian GNU/Linux 12 (bookworm)",
+      "swap": {
+        "capacity": 1073737728
+      },
+      "systemUUID": "a03269a2b5284148b82f1c5a33dc2fbd"
+    },
+    {
+      "name": "obi-cilium-v1-worker2",
+      "ready": "True",
+      "architecture": "arm64",
+      "bootID": "6c32b906-81f3-475e-b1ee-f69552e9212d",
+      "containerRuntimeVersion": "containerd://2.2.0",
+      "kernelVersion": "6.12.76-linuxkit",
+      "kubeProxyVersion": "",
+      "kubeletVersion": "v1.35.0",
+      "machineID": "67a1c869775c45f59f59624f58c1124d",
+      "operatingSystem": "linux",
+      "osImage": "Debian GNU/Linux 12 (bookworm)",
+      "swap": {
+        "capacity": 1073737728
+      },
+      "systemUUID": "67a1c869775c45f59f59624f58c1124d"
+    }
+  ],
+  "deployments": [
+    {
+      "name": "cilium-metrics-collector",
+      "desired": 1,
+      "available": 1,
+      "ready": 1
+    },
+    {
+      "name": "edge-nginx",
+      "desired": 1,
+      "available": 1,
+      "ready": 1
+    },
+    {
+      "name": "lgtm",
+      "desired": 1,
+      "available": 1,
+      "ready": 1
+    },
+    {
+      "name": "recommendations-v1",
+      "desired": 1,
+      "available": 1,
+      "ready": 1
+    },
+    {
+      "name": "recommendations-v2",
+      "desired": 1,
+      "available": 1,
+      "ready": 1
+    },
+    {
+      "name": "traffic-generator",
+      "desired": 1,
+      "available": 1,
+      "ready": 1
+    }
+  ],
+  "pods": [
+    {
+      "name": "cilium-metrics-collector-9d47454b6-rc6gf",
+      "node": "obi-cilium-v1-worker",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "otelcol-contrib",
+          "image": "docker.io/otel/opentelemetry-collector-contrib:0.161.0",
+          "imageID": "docker.io/otel/opentelemetry-collector-contrib@sha256:fd328de2552466ad78385e1b1289c3f2402b1c45f265b252aab1955b42845ac1",
+          "ready": true,
+          "restarts": 0
+        }
+      ]
+    },
+    {
+      "name": "edge-nginx-7b7c95dcc7-jf6ws",
+      "node": "obi-cilium-v1-worker",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "nginx",
+          "image": "sha256:96868d9fa38f469a86d2f25787e43ee9ad330339d30be260aa9f5a338bb03751",
+          "imageID": "docker.io/library/nginx@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10",
+          "ready": true,
+          "restarts": 0
+        }
+      ]
+    },
+    {
+      "name": "lgtm-7877774874-bjxwp",
+      "node": "obi-cilium-v1-worker",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "lgtm",
+          "image": "sha256:7e621b202de5dca0194e8dc99c85e12756ddae8b9fd6504bfe59b13b54c35da8",
+          "imageID": "docker.io/grafana/otel-lgtm@sha256:52a197a4aad6203af126c148c6194472b48f88d5481f246f5d3657023b30ac9f",
+          "ready": true,
+          "restarts": 0
+        }
+      ]
+    },
+    {
+      "name": "obi-opentelemetry-ebpf-instrumentation-cj7fv",
+      "node": "obi-cilium-v1-worker2",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "ebpf-instrument",
+          "image": "ghcr.io/open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument:v1.0.0",
+          "imageID": "ghcr.io/open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument@sha256:a68d70e934260f72540f157ccf4fb4adfa38f11de060d7d905696dad6a3fca02",
+          "ready": true,
+          "restarts": 0
+        }
+      ]
+    },
+    {
+      "name": "obi-opentelemetry-ebpf-instrumentation-vdrvj",
+      "node": "obi-cilium-v1-worker",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "ebpf-instrument",
+          "image": "ghcr.io/open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument:v1.0.0",
+          "imageID": "ghcr.io/open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument@sha256:a68d70e934260f72540f157ccf4fb4adfa38f11de060d7d905696dad6a3fca02",
+          "ready": true,
+          "restarts": 0
+        }
+      ]
+    },
+    {
+      "name": "recommendations-v1-845444657b-d8sjr",
+      "node": "obi-cilium-v1-worker",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "nginx",
+          "image": "sha256:96868d9fa38f469a86d2f25787e43ee9ad330339d30be260aa9f5a338bb03751",
+          "imageID": "docker.io/library/nginx@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10",
+          "ready": true,
+          "restarts": 0
+        }
+      ]
+    },
+    {
+      "name": "recommendations-v2-f9b77d965-tmswf",
+      "node": "obi-cilium-v1-worker",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "nginx",
+          "image": "sha256:96868d9fa38f469a86d2f25787e43ee9ad330339d30be260aa9f5a338bb03751",
+          "imageID": "docker.io/library/nginx@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10",
+          "ready": true,
+          "restarts": 0
+        }
+      ]
+    },
+    {
+      "name": "traffic-generator-848d9cd8cb-gjhtw",
+      "node": "obi-cilium-v1-worker",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "traffic-generator",
+          "image": "docker.io/library/obi-nginx-traffic:local",
+          "imageID": "sha256:570834016cfef082f08e4c40bef7fac5fa366d3b9490331446d383a3faf2f4fe",
+          "ready": true,
+          "restarts": 0
+        }
+      ]
+    }
+  ],
+  "localEndpoints": {
+    "application": "http://127.0.0.1:18080",
+    "grafana": "http://127.0.0.1:13000",
+    "hubble": "http://127.0.0.1:12001"
+  },
+  "limitations": [
+    "Local ARM64 kind smoke test only. No throughput, overhead, or production-capacity comparison.",
+    "Historical videos and September benchmark results remain v0.13.0 evidence."
+  ]
+}

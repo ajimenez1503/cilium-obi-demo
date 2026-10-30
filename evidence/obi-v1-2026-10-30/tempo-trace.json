@@ -1,0 +1,885 @@
+{
+  "traceID": "1a05bca9b157823237ea84f354ecf9e3",
+  "trace": {
+    "batches": [
+      {
+        "resource": {
+          "attributes": [
+            {
+              "key": "host.id",
+              "value": {
+                "stringValue": "a03269a2b5284148b82f1c5a33dc2fbd"
+              }
+            },
+            {
+              "key": "host.name",
+              "value": {
+                "stringValue": "recommendations-v2-f9b77d965-tmswf"
+              }
+            },
+            {
+              "key": "k8s.deployment.name",
+              "value": {
+                "stringValue": "recommendations-v2"
+              }
+            },
+            {
+              "key": "k8s.kind",
+              "value": {
+                "stringValue": "Deployment"
+              }
+            },
+            {
+              "key": "k8s.node.name",
+              "value": {
+                "stringValue": "obi-cilium-v1-worker"
+              }
+            },
+            {
+              "key": "k8s.owner.name",
+              "value": {
+                "stringValue": "recommendations-v2"
+              }
+            },
+            {
+              "key": "k8s.pod.start_time",
+              "value": {
+                "stringValue": "2026-10-30 19:03:59 +0000 UTC"
+              }
+            },
+            {
+              "key": "k8s.pod.uid",
+              "value": {
+                "stringValue": "21c7f79a-7b78-479c-8769-438cb0379f22"
+              }
+            },
+            {
+              "key": "k8s.replicaset.name",
+              "value": {
+                "stringValue": "recommendations-v2-f9b77d965"
+              }
+            },
+            {
+              "key": "os.type",
+              "value": {
+                "stringValue": "linux"
+              }
+            },
+            {
+              "key": "otel.scope.name",
+              "value": {
+                "stringValue": "go.opentelemetry.io/obi"
+              }
+            },
+            {
+              "key": "service.instance.id",
+              "value": {
+                "stringValue": "obi-nginx-example.recommendations-v2-f9b77d965-tmswf.nginx"
+              }
+            },
+            {
+              "key": "service.namespace",
+              "value": {
+                "stringValue": "obi-nginx-example"
+              }
+            },
+            {
+              "key": "telemetry.distro.name",
+              "value": {
+                "stringValue": "opentelemetry-ebpf-instrumentation"
+              }
+            },
+            {
+              "key": "telemetry.distro.version",
+              "value": {
+                "stringValue": "v1.0.0"
+              }
+            },
+            {
+              "key": "telemetry.sdk.language",
+              "value": {
+                "stringValue": "generic"
+              }
+            },
+            {
+              "key": "telemetry.sdk.name",
+              "value": {
+                "stringValue": "opentelemetry"
+              }
+            },
+            {
+              "key": "telemetry.sdk.version",
+              "value": {
+                "stringValue": "v1.47.0"
+              }
+            },
+            {
+              "key": "service.name",
+              "value": {
+                "stringValue": "recommendations-v2"
+              }
+            },
+            {
+              "key": "k8s.cluster.name",
+              "value": {
+                "stringValue": ""
+              }
+            },
+            {
+              "key": "k8s.namespace.name",
+              "value": {
+                "stringValue": "obi-nginx-example"
+              }
+            },
+            {
+              "key": "k8s.pod.name",
+              "value": {
+                "stringValue": "recommendations-v2-f9b77d965-tmswf"
+              }
+            },
+            {
+              "key": "k8s.container.name",
+              "value": {
+                "stringValue": "nginx"
+              }
+            }
+          ]
+        },
+        "scopeSpans": [
+          {
+            "scope": {},
+            "spans": [
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "7RUQX2RDnnE=",
+                "parentSpanId": "QRAkpGSMXUA=",
+                "name": "GET /api/users/:user_id/recommendations/rollout/:experience",
+                "kind": "SPAN_KIND_CLIENT",
+                "startTimeUnixNano": "1793387231641090591",
+                "endTimeUnixNano": "1793387231658076300",
+                "attributes": [
+                  {
+                    "key": "server.port",
+                    "value": {
+                      "intValue": "8081"
+                    }
+                  },
+                  {
+                    "key": "url.full",
+                    "value": {
+                      "stringValue": "http://edge-nginx/api/users/42/recommendations/rollout/personalized-homepage"
+                    }
+                  },
+                  {
+                    "key": "http.response.status_code",
+                    "value": {
+                      "intValue": "200"
+                    }
+                  },
+                  {
+                    "key": "url.scheme",
+                    "value": {
+                      "stringValue": "http"
+                    }
+                  },
+                  {
+                    "key": "network.peer.address",
+                    "value": {
+                      "stringValue": "10.108.28.245"
+                    }
+                  },
+                  {
+                    "key": "network.peer.port",
+                    "value": {
+                      "intValue": "8081"
+                    }
+                  },
+                  {
+                    "key": "network.protocol.version",
+                    "value": {
+                      "stringValue": "1.0"
+                    }
+                  },
+                  {
+                    "key": "http.request.method",
+                    "value": {
+                      "stringValue": "GET"
+                    }
+                  },
+                  {
+                    "key": "server.address",
+                    "value": {
+                      "stringValue": "edge-nginx"
+                    }
+                  }
+                ],
+                "status": {}
+              },
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "I6CeO+qEfYc=",
+                "parentSpanId": "3LNWcvk+WfI=",
+                "name": "in queue",
+                "kind": "SPAN_KIND_INTERNAL",
+                "startTimeUnixNano": "1793387231622461258",
+                "endTimeUnixNano": "1793387231630114216",
+                "status": {}
+              },
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "QRAkpGSMXUA=",
+                "parentSpanId": "3LNWcvk+WfI=",
+                "name": "processing",
+                "kind": "SPAN_KIND_INTERNAL",
+                "startTimeUnixNano": "1793387231630114216",
+                "endTimeUnixNano": "1793387231661524674",
+                "status": {}
+              },
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "3LNWcvk+WfI=",
+                "parentSpanId": "XcHZze5JSKM=",
+                "name": "GET /api/users/:user_id/recommendations/rollout/:experience",
+                "kind": "SPAN_KIND_SERVER",
+                "startTimeUnixNano": "1793387231622461258",
+                "endTimeUnixNano": "1793387231661524674",
+                "attributes": [
+                  {
+                    "key": "server.port",
+                    "value": {
+                      "intValue": "8082"
+                    }
+                  },
+                  {
+                    "key": "client.address",
+                    "value": {
+                      "stringValue": "edge-nginx"
+                    }
+                  },
+                  {
+                    "key": "http.response.status_code",
+                    "value": {
+                      "intValue": "200"
+                    }
+                  },
+                  {
+                    "key": "url.scheme",
+                    "value": {
+                      "stringValue": "http"
+                    }
+                  },
+                  {
+                    "key": "network.peer.address",
+                    "value": {
+                      "stringValue": "10.244.2.100"
+                    }
+                  },
+                  {
+                    "key": "network.peer.port",
+                    "value": {
+                      "intValue": "59782"
+                    }
+                  },
+                  {
+                    "key": "network.protocol.version",
+                    "value": {
+                      "stringValue": "1.0"
+                    }
+                  },
+                  {
+                    "key": "http.request.method",
+                    "value": {
+                      "stringValue": "GET"
+                    }
+                  },
+                  {
+                    "key": "url.path",
+                    "value": {
+                      "stringValue": "/api/users/42/recommendations/rollout/personalized-homepage"
+                    }
+                  },
+                  {
+                    "key": "server.address",
+                    "value": {
+                      "stringValue": "recommendations-v2"
+                    }
+                  },
+                  {
+                    "key": "http.route",
+                    "value": {
+                      "stringValue": "/api/users/:user_id/recommendations/rollout/:experience"
+                    }
+                  }
+                ],
+                "status": {}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "resource": {
+          "attributes": [
+            {
+              "key": "host.id",
+              "value": {
+                "stringValue": "a03269a2b5284148b82f1c5a33dc2fbd"
+              }
+            },
+            {
+              "key": "host.name",
+              "value": {
+                "stringValue": "edge-nginx-7b7c95dcc7-jf6ws"
+              }
+            },
+            {
+              "key": "k8s.deployment.name",
+              "value": {
+                "stringValue": "edge-nginx"
+              }
+            },
+            {
+              "key": "k8s.kind",
+              "value": {
+                "stringValue": "Deployment"
+              }
+            },
+            {
+              "key": "k8s.node.name",
+              "value": {
+                "stringValue": "obi-cilium-v1-worker"
+              }
+            },
+            {
+              "key": "k8s.owner.name",
+              "value": {
+                "stringValue": "edge-nginx"
+              }
+            },
+            {
+              "key": "k8s.pod.start_time",
+              "value": {
+                "stringValue": "2026-10-30 19:03:59 +0000 UTC"
+              }
+            },
+            {
+              "key": "k8s.pod.uid",
+              "value": {
+                "stringValue": "5eaa7b97-977c-419a-b184-9bcb2f000475"
+              }
+            },
+            {
+              "key": "k8s.replicaset.name",
+              "value": {
+                "stringValue": "edge-nginx-7b7c95dcc7"
+              }
+            },
+            {
+              "key": "os.type",
+              "value": {
+                "stringValue": "linux"
+              }
+            },
+            {
+              "key": "otel.scope.name",
+              "value": {
+                "stringValue": "go.opentelemetry.io/obi"
+              }
+            },
+            {
+              "key": "service.instance.id",
+              "value": {
+                "stringValue": "obi-nginx-example.edge-nginx-7b7c95dcc7-jf6ws.nginx"
+              }
+            },
+            {
+              "key": "service.namespace",
+              "value": {
+                "stringValue": "obi-nginx-example"
+              }
+            },
+            {
+              "key": "telemetry.distro.name",
+              "value": {
+                "stringValue": "opentelemetry-ebpf-instrumentation"
+              }
+            },
+            {
+              "key": "telemetry.distro.version",
+              "value": {
+                "stringValue": "v1.0.0"
+              }
+            },
+            {
+              "key": "telemetry.sdk.language",
+              "value": {
+                "stringValue": "generic"
+              }
+            },
+            {
+              "key": "telemetry.sdk.name",
+              "value": {
+                "stringValue": "opentelemetry"
+              }
+            },
+            {
+              "key": "telemetry.sdk.version",
+              "value": {
+                "stringValue": "v1.47.0"
+              }
+            },
+            {
+              "key": "service.name",
+              "value": {
+                "stringValue": "edge-nginx"
+              }
+            },
+            {
+              "key": "k8s.cluster.name",
+              "value": {
+                "stringValue": ""
+              }
+            },
+            {
+              "key": "k8s.namespace.name",
+              "value": {
+                "stringValue": "obi-nginx-example"
+              }
+            },
+            {
+              "key": "k8s.pod.name",
+              "value": {
+                "stringValue": "edge-nginx-7b7c95dcc7-jf6ws"
+              }
+            },
+            {
+              "key": "k8s.container.name",
+              "value": {
+                "stringValue": "nginx"
+              }
+            }
+          ]
+        },
+        "scopeSpans": [
+          {
+            "scope": {},
+            "spans": [
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "XcHZze5JSKM=",
+                "parentSpanId": "TCOgHGqaTwo=",
+                "name": "GET /api/users/:user_id/recommendations/rollout/:experience",
+                "kind": "SPAN_KIND_CLIENT",
+                "startTimeUnixNano": "1793387231621075633",
+                "endTimeUnixNano": "1793387231662281508",
+                "attributes": [
+                  {
+                    "key": "server.port",
+                    "value": {
+                      "intValue": "8082"
+                    }
+                  },
+                  {
+                    "key": "url.full",
+                    "value": {
+                      "stringValue": "http://edge-nginx/api/users/42/recommendations/rollout/personalized-homepage"
+                    }
+                  },
+                  {
+                    "key": "http.response.status_code",
+                    "value": {
+                      "intValue": "200"
+                    }
+                  },
+                  {
+                    "key": "url.scheme",
+                    "value": {
+                      "stringValue": "http"
+                    }
+                  },
+                  {
+                    "key": "network.peer.address",
+                    "value": {
+                      "stringValue": "10.111.148.189"
+                    }
+                  },
+                  {
+                    "key": "network.peer.port",
+                    "value": {
+                      "intValue": "8082"
+                    }
+                  },
+                  {
+                    "key": "network.protocol.version",
+                    "value": {
+                      "stringValue": "1.0"
+                    }
+                  },
+                  {
+                    "key": "http.request.method",
+                    "value": {
+                      "stringValue": "GET"
+                    }
+                  },
+                  {
+                    "key": "server.address",
+                    "value": {
+                      "stringValue": "edge-nginx"
+                    }
+                  }
+                ],
+                "status": {}
+              },
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "Zpdi4z482jQ=",
+                "parentSpanId": "1ICsnmqIzdw=",
+                "name": "in queue",
+                "kind": "SPAN_KIND_INTERNAL",
+                "startTimeUnixNano": "1793387231606491842",
+                "endTimeUnixNano": "1793387231608688008",
+                "status": {}
+              },
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "TCOgHGqaTwo=",
+                "parentSpanId": "1ICsnmqIzdw=",
+                "name": "processing",
+                "kind": "SPAN_KIND_INTERNAL",
+                "startTimeUnixNano": "1793387231608688008",
+                "endTimeUnixNano": "1793387231669223925",
+                "status": {}
+              },
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "1ICsnmqIzdw=",
+                "name": "GET /api/users/:user_id/recommendations/rollout/:experience",
+                "kind": "SPAN_KIND_SERVER",
+                "startTimeUnixNano": "1793387231606491842",
+                "endTimeUnixNano": "1793387231669223925",
+                "attributes": [
+                  {
+                    "key": "server.port",
+                    "value": {
+                      "intValue": "8080"
+                    }
+                  },
+                  {
+                    "key": "client.address",
+                    "value": {
+                      "stringValue": "traffic-generator"
+                    }
+                  },
+                  {
+                    "key": "http.response.status_code",
+                    "value": {
+                      "intValue": "200"
+                    }
+                  },
+                  {
+                    "key": "url.scheme",
+                    "value": {
+                      "stringValue": "http"
+                    }
+                  },
+                  {
+                    "key": "network.peer.address",
+                    "value": {
+                      "stringValue": "10.244.2.249"
+                    }
+                  },
+                  {
+                    "key": "network.peer.port",
+                    "value": {
+                      "intValue": "38228"
+                    }
+                  },
+                  {
+                    "key": "network.protocol.version",
+                    "value": {
+                      "stringValue": "1.1"
+                    }
+                  },
+                  {
+                    "key": "http.request.method",
+                    "value": {
+                      "stringValue": "GET"
+                    }
+                  },
+                  {
+                    "key": "url.path",
+                    "value": {
+                      "stringValue": "/api/users/42/recommendations/rollout/personalized-homepage"
+                    }
+                  },
+                  {
+                    "key": "server.address",
+                    "value": {
+                      "stringValue": "edge-nginx"
+                    }
+                  },
+                  {
+                    "key": "http.route",
+                    "value": {
+                      "stringValue": "/api/users/:user_id/recommendations/rollout/:experience"
+                    }
+                  }
+                ],
+                "status": {}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "resource": {
+          "attributes": [
+            {
+              "key": "host.id",
+              "value": {
+                "stringValue": "a03269a2b5284148b82f1c5a33dc2fbd"
+              }
+            },
+            {
+              "key": "host.name",
+              "value": {
+                "stringValue": "recommendations-v1-845444657b-d8sjr"
+              }
+            },
+            {
+              "key": "k8s.deployment.name",
+              "value": {
+                "stringValue": "recommendations-v1"
+              }
+            },
+            {
+              "key": "k8s.kind",
+              "value": {
+                "stringValue": "Deployment"
+              }
+            },
+            {
+              "key": "k8s.node.name",
+              "value": {
+                "stringValue": "obi-cilium-v1-worker"
+              }
+            },
+            {
+              "key": "k8s.owner.name",
+              "value": {
+                "stringValue": "recommendations-v1"
+              }
+            },
+            {
+              "key": "k8s.pod.start_time",
+              "value": {
+                "stringValue": "2026-10-30 19:03:59 +0000 UTC"
+              }
+            },
+            {
+              "key": "k8s.pod.uid",
+              "value": {
+                "stringValue": "b975c282-d716-48e1-a231-d450605001b2"
+              }
+            },
+            {
+              "key": "k8s.replicaset.name",
+              "value": {
+                "stringValue": "recommendations-v1-845444657b"
+              }
+            },
+            {
+              "key": "os.type",
+              "value": {
+                "stringValue": "linux"
+              }
+            },
+            {
+              "key": "otel.scope.name",
+              "value": {
+                "stringValue": "go.opentelemetry.io/obi"
+              }
+            },
+            {
+              "key": "service.instance.id",
+              "value": {
+                "stringValue": "obi-nginx-example.recommendations-v1-845444657b-d8sjr.nginx"
+              }
+            },
+            {
+              "key": "service.namespace",
+              "value": {
+                "stringValue": "obi-nginx-example"
+              }
+            },
+            {
+              "key": "telemetry.distro.name",
+              "value": {
+                "stringValue": "opentelemetry-ebpf-instrumentation"
+              }
+            },
+            {
+              "key": "telemetry.distro.version",
+              "value": {
+                "stringValue": "v1.0.0"
+              }
+            },
+            {
+              "key": "telemetry.sdk.language",
+              "value": {
+                "stringValue": "generic"
+              }
+            },
+            {
+              "key": "telemetry.sdk.name",
+              "value": {
+                "stringValue": "opentelemetry"
+              }
+            },
+            {
+              "key": "telemetry.sdk.version",
+              "value": {
+                "stringValue": "v1.47.0"
+              }
+            },
+            {
+              "key": "service.name",
+              "value": {
+                "stringValue": "recommendations-v1"
+              }
+            },
+            {
+              "key": "k8s.cluster.name",
+              "value": {
+                "stringValue": ""
+              }
+            },
+            {
+              "key": "k8s.namespace.name",
+              "value": {
+                "stringValue": "obi-nginx-example"
+              }
+            },
+            {
+              "key": "k8s.pod.name",
+              "value": {
+                "stringValue": "recommendations-v1-845444657b-d8sjr"
+              }
+            },
+            {
+              "key": "k8s.container.name",
+              "value": {
+                "stringValue": "nginx"
+              }
+            }
+          ]
+        },
+        "scopeSpans": [
+          {
+            "scope": {},
+            "spans": [
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "TainVT9RcdU=",
+                "parentSpanId": "6m6t2vJ3/50=",
+                "name": "in queue",
+                "kind": "SPAN_KIND_INTERNAL",
+                "startTimeUnixNano": "1793387231651710466",
+                "endTimeUnixNano": "1793387231654259758",
+                "status": {}
+              },
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "uTvtd2azHOc=",
+                "parentSpanId": "6m6t2vJ3/50=",
+                "name": "processing",
+                "kind": "SPAN_KIND_INTERNAL",
+                "startTimeUnixNano": "1793387231654259758",
+                "endTimeUnixNano": "1793387231656882383",
+                "status": {}
+              },
+              {
+                "traceId": "GgW8qbFXgjI36oTzVOz54w==",
+                "spanId": "6m6t2vJ3/50=",
+                "parentSpanId": "7RUQX2RDnnE=",
+                "name": "GET /api/users/:user_id/recommendations/rollout/:experience",
+                "kind": "SPAN_KIND_SERVER",
+                "startTimeUnixNano": "1793387231651710466",
+                "endTimeUnixNano": "1793387231656882383",
+                "attributes": [
+                  {
+                    "key": "server.port",
+                    "value": {
+                      "intValue": "8081"
+                    }
+                  },
+                  {
+                    "key": "client.address",
+                    "value": {
+                      "stringValue": "recommendations-v2"
+                    }
+                  },
+                  {
+                    "key": "http.response.status_code",
+                    "value": {
+                      "intValue": "200"
+                    }
+                  },
+                  {
+                    "key": "url.scheme",
+                    "value": {
+                      "stringValue": "http"
+                    }
+                  },
+                  {
+                    "key": "network.peer.address",
+                    "value": {
+                      "stringValue": "10.244.2.240"
+                    }
+                  },
+                  {
+                    "key": "network.peer.port",
+                    "value": {
+                      "intValue": "57628"
+                    }
+                  },
+                  {
+                    "key": "network.protocol.version",
+                    "value": {
+                      "stringValue": "1.0"
+                    }
+                  },
+                  {
+                    "key": "http.request.method",
+                    "value": {
+                      "stringValue": "GET"
+                    }
+                  },
+                  {
+                    "key": "url.path",
+                    "value": {
+                      "stringValue": "/api/users/42/recommendations/rollout/personalized-homepage"
+                    }
+                  },
+                  {
+                    "key": "server.address",
+                    "value": {
+                      "stringValue": "recommendations-v1"
+                    }
+                  },
+                  {
+                    "key": "http.route",
+                    "value": {
+                      "stringValue": "/api/users/:user_id/recommendations/rollout/:experience"
+                    }
+                  }
+                ],
+                "status": {}
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

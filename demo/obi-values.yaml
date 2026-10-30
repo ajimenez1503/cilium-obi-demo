@@ -1,9 +1,11 @@
 namespaceOverride: obi-nginx-example
 
+# The Helm chart and OBI application have independent versions. Chart 0.15.2
+# supports Config v2; explicitly override its v0.15.2 default application image.
 image:
   registry: ghcr.io
   repository: open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument
-  tag: v0.13.0
+  tag: v1.0.0
   digest: ""
 
 preset: application
@@ -15,41 +17,94 @@ contextPropagation:
 config:
   create: true
   data:
-    attributes:
-      kubernetes:
-        enable: true
-    routes:
-      patterns:
-        - /users/:user_id/home
-        - /campaigns/:campaign_id/redirect
-        - /support/articles/:article_id
-        - /checkout/sessions/:session_id
-        - /api/users/:user_id/recommendations/v1/:experience
-        - /api/users/:user_id/recommendations/v2/:experience
-        - /api/users/:user_id/recommendations/rollout/:experience
-      unmatched: path
-    otel_metrics_export:
-      endpoint: http://lgtm:4318
-    otel_traces_export:
-      endpoint: http://lgtm:4318
-    discovery:
-      instrument:
-        - namespace: obi-nginx-example
-          k8s_deployment_name: edge-nginx
-        - namespace: obi-nginx-example
-          k8s_deployment_name: recommendations-v1
-        - namespace: obi-nginx-example
-          k8s_deployment_name: recommendations-v2
-    ebpf:
-      context_propagation: all
-      traffic_control_backend: tcx
-      track_request_headers: true
+    file_format: "1.0"
+    tracer_provider:
+      processors:
+        - batch:
+            schedule_delay: 5000
+            exporter:
+              otlp_grpc:
+                endpoint: http://lgtm:4317
+                tls:
+                  insecure: true
+    meter_provider:
+      readers:
+        - periodic:
+            interval: 15000
+            exporter:
+              otlp_grpc:
+                endpoint: http://lgtm:4317
+                default_histogram_aggregation: explicit_bucket_histogram
+                tls:
+                  insecure: true
+    extensions:
+      obi:
+        version: "2.0"
+        capture:
+          policy:
+            default_action: exclude
+            poll_interval: 5s
+          rules:
+            - action: include
+              match:
+                kubernetes:
+                  namespace_glob: [obi-nginx-example]
+                  metadata_glob:
+                    k8s_deployment_name:
+                      - edge-nginx
+                      - recommendations-v1
+                      - recommendations-v2
+          metrics:
+            features: [application]
+          instrumentation:
+            http:
+              enabled:
+                traces: true
+                metrics: true
+              track_request_headers: true
+              routes:
+                incoming:
+                  patterns:
+                    - /users/:user_id/home
+                    - /campaigns/:campaign_id/redirect
+                    - /support/articles/:article_id
+                    - /checkout/sessions/:session_id
+                    - /api/users/:user_id/recommendations/v1/:experience
+                    - /api/users/:user_id/recommendations/v2/:experience
+                    - /api/users/:user_id/recommendations/rollout/:experience
+                  unmatched: path
+                outgoing:
+                  patterns:
+                    - /users/:user_id/home
+                    - /campaigns/:campaign_id/redirect
+                    - /support/articles/:article_id
+                    - /checkout/sessions/:session_id
+                    - /api/users/:user_id/recommendations/v1/:experience
+                    - /api/users/:user_id/recommendations/v2/:experience
+                    - /api/users/:user_id/recommendations/rollout/:experience
+                  unmatched: path
+          network:
+            capture:
+              enabled: false
+            stats:
+              enabled: false
+          engine:
+            # Application TCP propagation uses SK_MSG and SOCK_OPS socket hooks.
+            propagation:
+              context_propagation: all
+            # Select TCX if optional TC network-flow collection is enabled later.
+            # With network.capture.enabled=false above, no OBI TC program is expected.
+            traffic:
+              control_backend: tcx
+        enrich:
+          enrichers:
+            kubernetes:
+              mode: enabled
+          service_name:
+            sources: [k8s, dns]
 
-env:
-  OTEL_EBPF_DISCOVERY_POLL_INTERVAL: 5s
-  OTEL_EBPF_METRICS_INTERVAL: 15s
-  OTEL_EBPF_NAME_RESOLVER_SOURCES: k8s,dns
-
+# Config v2 uses the values above directly. Legacy OTEL_EBPF_* environment
+# overrides are intentionally absent because Config v2 does not apply them.
 resources:
   requests:
     cpu: 50m

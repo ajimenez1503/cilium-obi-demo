@@ -1,0 +1,344 @@
+{
+  "traces": [
+    {
+      "traceID": "151d7121bb57a9b717b956a34665c2de",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387232469428425",
+      "durationMs": 2
+    },
+    {
+      "traceID": "c97dbd94a0b66fec1d99a47f6bdbaa13",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387231785861425",
+      "durationMs": 2
+    },
+    {
+      "traceID": "1a05bca9b157823237ea84f354ecf9e3",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387231606491842",
+      "durationMs": 62
+    },
+    {
+      "traceID": "e1bb69fc8cf6d009a224f122711bad19",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v2/:experience",
+      "startTimeUnixNano": "1793387230774325632",
+      "durationMs": 3
+    },
+    {
+      "traceID": "180f131794a5aa16c7423168c105648e",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /users/:user_id/home",
+      "startTimeUnixNano": "1793387230079002132",
+      "durationMs": 3
+    },
+    {
+      "traceID": "55a318ea39554018befece596fed14ef",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387229941684924",
+      "durationMs": 5
+    },
+    {
+      "traceID": "be565eef3ea268b487f54bb18095dbc4",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387228788395799",
+      "durationMs": 8
+    },
+    {
+      "traceID": "f3f8e1bc3ab43d8326cc2ad45c8ac7f8",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387228451812548",
+      "durationMs": 6
+    },
+    {
+      "traceID": "937c69f6406deef12dff2a630e73d700",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /campaigns/:campaign_id/redirect",
+      "startTimeUnixNano": "1793387227711094589",
+      "durationMs": 1
+    },
+    {
+      "traceID": "97516c708b93fd4f38d759b1b9d16f01",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387227415467840",
+      "durationMs": 1
+    },
+    {
+      "traceID": "6604173dabf34d2210bd2270130690f3",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /checkout/sessions/:session_id",
+      "startTimeUnixNano": "1793387226572578713"
+    },
+    {
+      "traceID": "26f39027c96f65f7b6e6190ce1206c87",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /users/:user_id/home",
+      "startTimeUnixNano": "1793387226039559381"
+    },
+    {
+      "traceID": "f99339920c82211a1431d4b8a358bad5",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387225424939338",
+      "durationMs": 1
+    },
+    {
+      "traceID": "e97c3d944c41417d6216434ec03cdd88",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387224905993464",
+      "durationMs": 1
+    },
+    {
+      "traceID": "23205a465f4ffe93b81991e6b9f9830",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v2/:experience",
+      "startTimeUnixNano": "1793387223742973963"
+    },
+    {
+      "traceID": "883326aded7cbadc056161389ac132f5",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /support/articles/:article_id",
+      "startTimeUnixNano": "1793387223620468171"
+    },
+    {
+      "traceID": "8d90964d764bdd6e5fc212374c138dba",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387222413388754",
+      "durationMs": 3
+    },
+    {
+      "traceID": "1dd369166ae9926c74522fd5591da77d",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387222392711295",
+      "durationMs": 2
+    },
+    {
+      "traceID": "88f419891cc0d1a7182033f3ab691831",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /users/:user_id/home",
+      "startTimeUnixNano": "1793387222028149920"
+    },
+    {
+      "traceID": "894179897456d4d5c1891a8a5cc606ba",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387221694087545",
+      "durationMs": 1
+    },
+    {
+      "traceID": "c342667c9a3ad3ed9160bc42f6e0e75",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /campaigns/:campaign_id/redirect",
+      "startTimeUnixNano": "1793387218679486669"
+    },
+    {
+      "traceID": "be13f9d98bf53fceede22e9962dcbb09",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387214849973333",
+      "durationMs": 1
+    },
+    {
+      "traceID": "3c9a335a97db88318dd58c935150dd18",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /users/:user_id/home",
+      "startTimeUnixNano": "1793387214003553000"
+    },
+    {
+      "traceID": "f76456f81867e0d2a354bb0fc3030037",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387213367000416",
+      "durationMs": 1
+    },
+    {
+      "traceID": "2bb463657b114aa94cef56be7b901abf",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387212334139290",
+      "durationMs": 1
+    },
+    {
+      "traceID": "fdf482e5a4edcd9acb4e1092731cdace",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387211680351888",
+      "durationMs": 2
+    },
+    {
+      "traceID": "36057fde158867df08ca2c0165ed18f8",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /support/articles/:article_id",
+      "startTimeUnixNano": "1793387211610678388"
+    },
+    {
+      "traceID": "93f568b35a0c5ca5bf7313fffe749676",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /checkout/sessions/:session_id",
+      "startTimeUnixNano": "1793387211563432180"
+    },
+    {
+      "traceID": "9fd0451877a06d5958e80bca52ddbb0a",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387210352581887",
+      "durationMs": 3
+    },
+    {
+      "traceID": "e9565aa15d0cea5a256ac68ffb5366c3",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /users/:user_id/home",
+      "startTimeUnixNano": "1793387209988500303"
+    },
+    {
+      "traceID": "77a4c43e94e9d05d71585171fbaf412f",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387209821915762",
+      "durationMs": 1
+    },
+    {
+      "traceID": "7bb36d479c83eca09c4e6c1fa24c6c77",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v2/:experience",
+      "startTimeUnixNano": "1793387209717779345",
+      "durationMs": 1
+    },
+    {
+      "traceID": "db63ef750e231c3ec756838dd9cf16be",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /campaigns/:campaign_id/redirect",
+      "startTimeUnixNano": "1793387209667784512"
+    },
+    {
+      "traceID": "ed92b9c52532d98e6cb45e80535507c3",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387207335660219",
+      "durationMs": 3
+    },
+    {
+      "traceID": "67f6912301f8fb92c55cd3abbec3d53b",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387207310663969",
+      "durationMs": 1
+    },
+    {
+      "traceID": "59c4dd72e32a6dc06f14d5f92afa61f2",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387206739490719",
+      "durationMs": 3
+    },
+    {
+      "traceID": "9d25487d26b0aaba28dba41103ea5ac6",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /users/:user_id/home",
+      "startTimeUnixNano": "1793387205978212010"
+    },
+    {
+      "traceID": "ccc65c3793e257dda5d4fd93dc682e49",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387204797644384",
+      "durationMs": 1
+    },
+    {
+      "traceID": "6bab817506a847a0c2408d49e8807667",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387204319036510",
+      "durationMs": 3
+    },
+    {
+      "traceID": "65ccb9f0e2e33256a68686b3bfa50e94",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v2/:experience",
+      "startTimeUnixNano": "1793387202701688758",
+      "durationMs": 2
+    },
+    {
+      "traceID": "969ed644ed92859065a1e1a71973a3da",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387202274725050",
+      "durationMs": 2
+    },
+    {
+      "traceID": "1d364cb3b807c38061d05505dc8da8f",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /users/:user_id/home",
+      "startTimeUnixNano": "1793387201957140716"
+    },
+    {
+      "traceID": "295ef2f4b8f0b3acd00e5e878dfc3589",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387201657318841",
+      "durationMs": 2
+    },
+    {
+      "traceID": "898e4c2186fc78501a6218ef1c115703",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387201280336632",
+      "durationMs": 4
+    },
+    {
+      "traceID": "5f4eb96b0aa3f39a178edd9fee0a7de0",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /campaigns/:campaign_id/redirect",
+      "startTimeUnixNano": "1793387200651062300"
+    },
+    {
+      "traceID": "9c8872d6d68f4429e1598f9887602c44",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387199747700882",
+      "durationMs": 2
+    },
+    {
+      "traceID": "1a36590888ca8f3f26f7a1f86b54c6c1",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /support/articles/:article_id",
+      "startTimeUnixNano": "1793387199598105882"
+    },
+    {
+      "traceID": "a7a455a25b2139bf4b6ccb63ab7805ec",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/rollout/:experience",
+      "startTimeUnixNano": "1793387198263890006",
+      "durationMs": 3
+    },
+    {
+      "traceID": "f9f231a432a0c563ecd7303ad7ee3f53",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /users/:user_id/home",
+      "startTimeUnixNano": "1793387197940078465"
+    },
+    {
+      "traceID": "a4c7fdc4d6bb58c27e00b801eb504cc1",
+      "rootServiceName": "edge-nginx",
+      "rootTraceName": "GET /api/users/:user_id/recommendations/v1/:experience",
+      "startTimeUnixNano": "1793387197226995714",
+      "durationMs": 2
+    }
+  ],
+  "metrics": {
+    "inspectedTraces": 57,
+    "inspectedBytes": "129017",
+    "completedJobs": 3,
+    "totalJobs": 3
+  }
+}

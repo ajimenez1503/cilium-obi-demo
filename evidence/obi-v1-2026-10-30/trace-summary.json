@@ -1,0 +1,11 @@
+{
+  "traceID": "1a05bca9b157823237ea84f354ecf9e3",
+  "services": [
+    "edge-nginx",
+    "recommendations-v1",
+    "recommendations-v2"
+  ],
+  "spanCount": 11,
+  "route": "GET /api/users/:user_id/recommendations/rollout/:experience",
+  "allThreeServicesPresent": true
+}

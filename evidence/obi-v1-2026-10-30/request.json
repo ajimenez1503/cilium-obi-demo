@@ -1,0 +1,6 @@
+{
+  "time": "2026-10-30T19:07:19.192Z",
+  "path": "/api/users/42/recommendations/rollout/personalized-homepage",
+  "status": 200,
+  "body": "recommendations v1 rollout ok\n"
+}

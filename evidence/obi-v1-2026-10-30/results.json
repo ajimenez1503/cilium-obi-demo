@@ -1,0 +1,62 @@
+{
+  "kind": "local-smoke-test",
+  "benchmark": false,
+  "collectedAt": "2026-10-30T19:07:18.400Z",
+  "obiApplicationVersion": "v1.0.0",
+  "obiRevision": "d23be0d6b709c7e7047067c7e32c2500deee51dd",
+  "obiConfigVersion": "2.0",
+  "obiHelmChartVersion": "0.15.2",
+  "ciliumVersion": "1.20.2",
+  "context": "kind-obi-cilium-v1",
+  "obiReady": {
+    "ready": 2,
+    "desired": 2
+  },
+  "ciliumReady": {
+    "ready": 3,
+    "desired": 3
+  },
+  "rolloutHTTPStatus": 200,
+  "threeServiceTrace": {
+    "traceID": "1a05bca9b157823237ea84f354ecf9e3",
+    "services": [
+      "edge-nginx",
+      "recommendations-v1",
+      "recommendations-v2"
+    ],
+    "spanCount": 11,
+    "route": "GET /api/users/:user_id/recommendations/rollout/:experience",
+    "allThreeServicesPresent": true
+  },
+  "metricQueryResultSeries": {
+    "obiRequestCount": 3,
+    "obiLatencyBuckets": 1,
+    "ciliumForwarded": 1,
+    "hubbleFlows": 2,
+    "collectorAcceptedSpans": 1,
+    "collectorExportedSpans": 1,
+    "serviceGraphEdges": 4
+  },
+  "policySmoke": {
+    "passed": true,
+    "beforeHTTPStatus": 200,
+    "deniedClientTimedOut": true,
+    "allowedRolloutHTTPStatus": 200,
+    "policyDeniedRecords": 16,
+    "recoveredHTTPStatus": 200,
+    "policyRemoved": true
+  },
+  "attachmentObservations": {
+    "ciliumTCX": true,
+    "obiTCProgramsObserved": false,
+    "obiPropagation": "BPF_SOCK_OPS and SK_MSG socket propagation",
+    "optionalNetworkCaptureEnabled": false
+  },
+  "limitations": [
+    "Smoke test only, not a benchmark or production-capacity test.",
+    "Dashboard query responses were tested. Dashboard browser rendering was not inspected in this test.",
+    "OBI warned that bpffs was not mounted in its container. Process-internal maps were used; external pinned-map features such as profile correlation were unavailable.",
+    "No shared OBI/Cilium TC chain is established by this application-only run.",
+    "September benchmark and embedded recordings are historical OBI v0.13.0 evidence."
+  ]
+}

@@ -1,4 +1,59 @@
+# Historical v0.13.0 application-only Netlink TC variant.
+# Use as OBI_VALUES_FILE with OBI_CHART_VERSION=0.14.0, not as a v2 overlay.
+# This does not update the recorded evidence.
+namespaceOverride: obi-nginx-example
+
+image:
+  registry: ghcr.io
+  repository: open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument
+  tag: v0.13.0
+  digest: ""
+
+preset: application
+privileged: true
+
+contextPropagation:
+  enabled: true
+
 config:
+  create: true
   data:
+    attributes:
+      kubernetes:
+        enable: true
+    routes:
+      patterns:
+        - /users/:user_id/home
+        - /campaigns/:campaign_id/redirect
+        - /support/articles/:article_id
+        - /checkout/sessions/:session_id
+        - /api/users/:user_id/recommendations/v1/:experience
+        - /api/users/:user_id/recommendations/v2/:experience
+        - /api/users/:user_id/recommendations/rollout/:experience
+      unmatched: path
+    otel_metrics_export:
+      endpoint: http://lgtm:4318
+    otel_traces_export:
+      endpoint: http://lgtm:4318
+    discovery:
+      instrument:
+        - namespace: obi-nginx-example
+          k8s_deployment_name: edge-nginx
+        - namespace: obi-nginx-example
+          k8s_deployment_name: recommendations-v1
+        - namespace: obi-nginx-example
+          k8s_deployment_name: recommendations-v2
     ebpf:
+      context_propagation: all
       traffic_control_backend: tc
+      track_request_headers: true
+
+env:
+  OTEL_EBPF_DISCOVERY_POLL_INTERVAL: 5s
+  OTEL_EBPF_METRICS_INTERVAL: 15s
+  OTEL_EBPF_NAME_RESOLVER_SOURCES: k8s,dns
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi

@@ -3,8 +3,8 @@ set -euo pipefail
 
 CLUSTER_NAME="${CLUSTER_NAME:-obi-cilium-talk}"
 CILIUM_VERSION="${CILIUM_VERSION:-1.20.2}"
-OBI_CHART_VERSION="${OBI_CHART_VERSION:-0.14.0}"
-OBI_UPSTREAM_COMMIT="${OBI_UPSTREAM_COMMIT:-1d0b44040a861ac092261096491a7b3a1f269531}"
+OBI_CHART_VERSION="${OBI_CHART_VERSION:-0.15.2}"
+OBI_UPSTREAM_COMMIT="${OBI_UPSTREAM_COMMIT:-d23be0d6b709c7e7047067c7e32c2500deee51dd}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
@@ -16,12 +16,12 @@ if [[ -n "${CILIUM_EXTRA_VALUES:-}" ]]; then
   CILIUM_VALUES_ARGS+=(-f "${CILIUM_EXTRA_VALUES}")
 fi
 
-OBI_VALUES_ARGS=(-f "${SCRIPT_DIR}/obi-values.yaml")
+OBI_VALUES_ARGS=(-f "${OBI_VALUES_FILE:-${SCRIPT_DIR}/obi-values.yaml}")
 if [[ -n "${OBI_EXTRA_VALUES:-}" ]]; then
   OBI_VALUES_ARGS+=(-f "${OBI_EXTRA_VALUES}")
 fi
 
-for tool in docker kind kubectl helm git curl; do
+for tool in docker kind kubectl helm git curl python3; do
   command -v "${tool}" >/dev/null 2>&1 || {
     printf 'missing required command: %s\n' "${tool}" >&2
     exit 1
@@ -48,7 +48,6 @@ git -C "${UPSTREAM_DIR}" fetch --depth 1 origin "${OBI_UPSTREAM_COMMIT}"
 git -C "${UPSTREAM_DIR}" checkout --detach "${OBI_UPSTREAM_COMMIT}"
 
 kind create cluster --name "${CLUSTER_NAME}" --config "${SCRIPT_DIR}/kind-config.yaml"
-kubectl config use-context "${KUBE_CONTEXT}" >/dev/null
 
 docker exec "${CLUSTER_NAME}-worker" test -r /sys/kernel/btf/vmlinux
 docker exec "${CLUSTER_NAME}-worker" test -d /sys/kernel/tracing
@@ -92,4 +91,4 @@ helm upgrade --install obi open-telemetry/opentelemetry-ebpf-instrumentation \
 kubectl --context "${KUBE_CONTEXT}" -n obi-nginx-example rollout status daemonset/obi-opentelemetry-ebpf-instrumentation --timeout=5m
 kubectl --context "${KUBE_CONTEXT}" -n obi-nginx-example wait --for=condition=Available deployments --all --timeout=10m
 
-"${SCRIPT_DIR}/verify.sh"
+CLUSTER_NAME="${CLUSTER_NAME}" "${SCRIPT_DIR}/verify.sh"

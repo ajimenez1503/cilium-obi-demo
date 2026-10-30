@@ -11,7 +11,7 @@ and the latest rehearsed benchmark results.
 
 The demo answers three operator questions:
 
-1. Did Cilium and OBI attach in a compatible order?
+1. Which attachment hooks do the enabled OBI features actually use?
 2. What does the same request look like in Hubble and in OBI telemetry?
 3. What happens when Cilium policy denies the request?
 
@@ -30,7 +30,7 @@ flowchart LR
 
 OBI supplies application spans and RED metrics. Hubble supplies network identity, flow, verdict, and drop evidence. An OpenTelemetry Collector scrapes the Cilium agent and Hubble Prometheus endpoints and sends those metrics to the same Grafana LGTM instance. Hubble flow records remain available through Relay, the CLI, and Hubble UI.
 
-## Live evidence
+## Recorded evidence (OBI v0.13.0)
 
 The same request path is visible as application telemetry in Grafana and as network flows in Hubble.
 
@@ -41,12 +41,22 @@ The same request path is visible as application telemetry in Grafana and as netw
 ## Pinned versions
 
 - Cilium chart and application: `1.20.2`
-- OBI chart: `0.14.0`
-- OBI application: `v0.13.0`
+- OBI chart: `0.15.2`
+- OBI application: `v1.0.0`
 - OpenTelemetry Collector Contrib: `0.161.0`
-- Upstream OBI example commit: `1d0b44040a861ac092261096491a7b3a1f269531`
+- Upstream OBI example commit: `d23be0d6b709c7e7047067c7e32c2500deee51dd`
 
-Rehearse these exact pins before presenting. OBI is pre-1.0, so later releases can contain breaking changes.
+The OBI chart and application have independent versions. Chart `0.15.2` is used with an explicit `v1.0.0` image override and Configuration v2. Rehearse these exact pins before presenting.
+
+## OBI 1.0 upgrade
+
+The default demo now targets [OBI v1.0.0](https://opentelemetry.io/blog/2026/obi-v1-release/). Its stability guarantees apply to documented stable interfaces, signals, and attributes. Runtime metrics and network-flow attribute names remain outside that contract.
+
+See [the upgrade guide](docs/obi-v1-upgrade.md) for the configuration migration, validation commands, known limitations, and the distinction between the current demo and historical evidence.
+
+The [v1 smoke-test evidence](evidence/obi-v1-2026-10-30/README.md) records metrics and a connected trace from all three services, all 47 dashboard queries returning data, and policy denial followed by HTTP 200 recovery. This run validates functionality and does not replace the historical performance benchmark.
+
+The September recordings, legacy priority experiment, and B/D benchmark used OBI `v0.13.0`. They are retained as versioned evidence and do not measure OBI 1.0 performance.
 
 ## Prerequisites
 
@@ -56,6 +66,7 @@ Rehearse these exact pins before presenting. OBI is pre-1.0, so later releases c
 - Helm 3.13 or later
 - Git
 - curl
+- Python 3 (standard library only, for telemetry verification)
 
 The Docker Linux VM must expose BTF and support TCX. The setup script checks BTF and tracefs inside a kind worker before installing the stack.
 
@@ -64,10 +75,12 @@ The Docker Linux VM must expose BTF and support TCX. The setup script checks BTF
 ```bash
 git clone https://github.com/ajimenez1503/cilium-obi-demo.git
 cd cilium-obi-demo
+mkdir -p .demo
+export KUBECONFIG="$PWD/.demo/kubeconfig"
 ./demo/setup.sh
 ```
 
-The setup script stops if the named cluster already exists. It never deletes a cluster automatically.
+The private kubeconfig keeps this demo separate from your normal Kubernetes contexts. Keep that KUBECONFIG environment variable set for the commands below. The setup script stops if the named cluster already exists. It never deletes a cluster automatically.
 
 Open the interfaces in separate terminals:
 
@@ -127,7 +140,7 @@ The Kubernetes traffic generator runs continuously. To generate one controlled r
 ./demo/verify.sh
 ```
 
-Use live status and log output as the proof. Do not infer TCX from Helm values alone.
+Use live status, logs, and node attachment output as evidence. The default application demo uses OBI socket hooks and Cilium TCX. Optional OBI network-flow collection is disabled. A configured TCX backend does not prove that OBI attached a TC program. The separate historical TC collection experiment demonstrates shared-hook ordering.
 
 ### 2. Compare one successful request
 
@@ -167,14 +180,16 @@ This inserts Envoy into the selected path. Treat it as a separate experiment bec
 
 ## Legacy traffic-control experiment
 
-Run the legacy TC variant only in a fresh cluster. OBI v0.13.0 names the legacy backend `tc`.
+Run the historical legacy TC variant only in a fresh cluster. Keep its OBI `v0.13.0` image and chart `0.14.0` pins. OBI v0.13.0 names the legacy backend `tc`.
 
 Safe ordering, with OBI at priority 1 and Cilium at priority 2:
 
 ```bash
 CLUSTER_NAME=obi-cilium-legacy \
+OBI_CHART_VERSION=0.14.0 \
+OBI_UPSTREAM_COMMIT=1d0b44040a861ac092261096491a7b3a1f269531 \
 CILIUM_EXTRA_VALUES="$PWD/demo/cilium-values-legacy-safe.yaml" \
-OBI_EXTRA_VALUES="$PWD/demo/obi-values-legacy.yaml" \
+OBI_VALUES_FILE="$PWD/demo/obi-values-legacy.yaml" \
 ./demo/setup.sh
 ```
 
@@ -199,6 +214,7 @@ The manifests and scripts can be checked statically on macOS, but attachment beh
 
 ## References
 
+- [OBI v1.0.0 release announcement](https://opentelemetry.io/blog/2026/obi-v1-release/)
 - [OBI and Cilium compatibility](https://opentelemetry.io/docs/zero-code/obi/cilium-compatibility/)
 - [OBI Kubernetes installation](https://opentelemetry.io/docs/zero-code/obi/setup/kubernetes/)
 - [Cilium installation on kind](https://docs.cilium.io/en/stable/installation/kind/)

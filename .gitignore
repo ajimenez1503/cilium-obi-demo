@@ -1,4 +1,5 @@
 .DS_Store
+.demo/
 obi-cilium-demo-upstream/
 *.log
 slides/*

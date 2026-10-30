@@ -1,0 +1,178 @@
+{
+  "obiRequestCount": {
+    "query": "sum by (service_name) (http_server_request_duration_seconds_count)",
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {
+            "service_name": "recommendations-v2"
+          },
+          "value": [
+            1793387239.291,
+            "27"
+          ]
+        },
+        {
+          "metric": {
+            "service_name": "recommendations-v1"
+          },
+          "value": [
+            1793387239.291,
+            "43"
+          ]
+        },
+        {
+          "metric": {
+            "service_name": "edge-nginx"
+          },
+          "value": [
+            1793387239.291,
+            "75"
+          ]
+        }
+      ]
+    }
+  },
+  "obiLatencyBuckets": {
+    "query": "count(http_server_request_duration_seconds_bucket)",
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1793387239.327,
+            "256"
+          ]
+        }
+      ]
+    }
+  },
+  "ciliumForwarded": {
+    "query": "sum(cilium_forward_count_total)",
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1793387239.342,
+            "181170"
+          ]
+        }
+      ]
+    }
+  },
+  "hubbleFlows": {
+    "query": "sum by (verdict) (hubble_flows_processed_total)",
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {
+            "verdict": "FORWARDED"
+          },
+          "value": [
+            1793387239.351,
+            "6653"
+          ]
+        },
+        {
+          "metric": {
+            "verdict": "DROPPED"
+          },
+          "value": [
+            1793387239.351,
+            "100"
+          ]
+        }
+      ]
+    }
+  },
+  "collectorAcceptedSpans": {
+    "query": "sum(otelcol_receiver_accepted_spans_total)",
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1793387239.359,
+            "579"
+          ]
+        }
+      ]
+    }
+  },
+  "collectorExportedSpans": {
+    "query": "sum(otelcol_exporter_sent_spans_total)",
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1793387239.367,
+            "579"
+          ]
+        }
+      ]
+    }
+  },
+  "serviceGraphEdges": {
+    "query": "sum by (client, server) (traces_service_graph_request_total)",
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {
+            "client": "recommendations-v2",
+            "server": "recommendations-v1"
+          },
+          "value": [
+            1793387239.384,
+            "15"
+          ]
+        },
+        {
+          "metric": {
+            "client": "edge-nginx",
+            "server": "recommendations-v2"
+          },
+          "value": [
+            1793387239.384,
+            "20"
+          ]
+        },
+        {
+          "metric": {
+            "client": "edge-nginx",
+            "server": "recommendations-v1"
+          },
+          "value": [
+            1793387239.384,
+            "18"
+          ]
+        },
+        {
+          "metric": {
+            "client": "user",
+            "server": "edge-nginx"
+          },
+          "value": [
+            1793387239.384,
+            "39"
+          ]
+        }
+      ]
+    }
+  }
+}

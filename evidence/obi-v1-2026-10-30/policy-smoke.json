@@ -1,0 +1,1476 @@
+{
+  "kind": "policy-smoke-test",
+  "benchmark": false,
+  "startedAt": "2026-10-30T19:09:33.127Z",
+  "before": {
+    "time": "2026-10-30T19:09:33.132Z",
+    "path": "/api/users/42/recommendations/v1/homepage-hero",
+    "status": 200,
+    "body": "recommendations v1 ok\n"
+  },
+  "deniedAttempts": [
+    {
+      "time": "2026-10-30T19:09:33.284Z",
+      "path": "/api/users/42/recommendations/v1/homepage-hero",
+      "status": 200,
+      "body": "recommendations v1 ok\n"
+    },
+    {
+      "time": "2026-10-30T19:09:33.544Z",
+      "path": "/api/users/42/recommendations/v1/homepage-hero",
+      "status": null,
+      "error": "TimeoutError: The operation was aborted due to timeout"
+    }
+  ],
+  "allowedRolloutDuringPolicy": {
+    "time": "2026-10-30T19:09:36.546Z",
+    "path": "/api/users/42/recommendations/rollout/personalized-homepage",
+    "status": 200,
+    "body": "recommendations v1 rollout ok\n"
+  },
+  "policyDeniedRecords": [
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:33.426162962Z",
+        "uuid": "c8cc3f90-60f3-4576-b7f5-83f7035c29c6",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58048,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 5
+        },
+        "traffic_direction": "INGRESS",
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:33.426162962Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:33.426202546Z",
+        "uuid": "a6fc9ab4-658f-41e7-a9eb-76d6636336e0",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58048,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 1,
+          "sub_type": 133
+        },
+        "traffic_direction": "INGRESS",
+        "file": {
+          "name": "bpf_lxc.c",
+          "line": 2410
+        },
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:33.426202546Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:33.547033587Z",
+        "uuid": "95afe6b3-9b6c-4771-adbf-df14a0dc7df9",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58056,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 5
+        },
+        "traffic_direction": "INGRESS",
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:33.547033587Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:33.547045296Z",
+        "uuid": "2eb18462-5a15-4a09-a48c-0453ca269977",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58056,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 1,
+          "sub_type": 133
+        },
+        "traffic_direction": "INGRESS",
+        "file": {
+          "name": "bpf_lxc.c",
+          "line": 2410
+        },
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:33.547045296Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:34.460244046Z",
+        "uuid": "4807b3b2-ce1b-4382-9765-7e032aa63125",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58048,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 5
+        },
+        "traffic_direction": "INGRESS",
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:34.460244046Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:34.460276921Z",
+        "uuid": "e8edca73-cf34-4a1c-993d-5fe5c6f6ab5b",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58048,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 1,
+          "sub_type": 133
+        },
+        "traffic_direction": "INGRESS",
+        "file": {
+          "name": "bpf_lxc.c",
+          "line": 2410
+        },
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:34.460276921Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:34.591607505Z",
+        "uuid": "76885e95-8eac-4aba-828e-b07f804fcd51",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58056,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 5
+        },
+        "traffic_direction": "INGRESS",
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:34.591607505Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:34.591630338Z",
+        "uuid": "9ac0c552-79f4-4223-a696-705ba5402c2e",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58056,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 1,
+          "sub_type": 133
+        },
+        "traffic_direction": "INGRESS",
+        "file": {
+          "name": "bpf_lxc.c",
+          "line": 2410
+        },
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:34.591630338Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:35.484113630Z",
+        "uuid": "04ef12c4-882c-4a3f-8c91-1921759f4efd",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58048,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 5
+        },
+        "traffic_direction": "INGRESS",
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:35.484113630Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:35.484136588Z",
+        "uuid": "387272ca-27f6-419e-bc13-81d810c9a45c",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58048,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 1,
+          "sub_type": 133
+        },
+        "traffic_direction": "INGRESS",
+        "file": {
+          "name": "bpf_lxc.c",
+          "line": 2410
+        },
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:35.484136588Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:35.612277505Z",
+        "uuid": "84ea733c-25c4-445d-b2a9-1544a293b55d",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58056,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 5
+        },
+        "traffic_direction": "INGRESS",
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:35.612277505Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:35.612295755Z",
+        "uuid": "e85f163c-a048-4073-ab40-090ece729557",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58056,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 1,
+          "sub_type": 133
+        },
+        "traffic_direction": "INGRESS",
+        "file": {
+          "name": "bpf_lxc.c",
+          "line": 2410
+        },
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:35.612295755Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:36.508226755Z",
+        "uuid": "87cf1314-7651-4550-b9f6-b7975761801b",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58048,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 5
+        },
+        "traffic_direction": "INGRESS",
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:36.508226755Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:36.508234339Z",
+        "uuid": "01c04ebf-0640-47e6-8045-cddeeed53ad6",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58048,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 1,
+          "sub_type": 133
+        },
+        "traffic_direction": "INGRESS",
+        "file": {
+          "name": "bpf_lxc.c",
+          "line": 2410
+        },
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:36.508234339Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:36.637132631Z",
+        "uuid": "018c9e14-b2ab-4cc3-aef7-0e4df40eb8b7",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58056,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 5
+        },
+        "traffic_direction": "INGRESS",
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:36.637132631Z"
+    },
+    {
+      "flow": {
+        "time": "2026-10-30T19:09:36.637161006Z",
+        "uuid": "da362a71-a802-4415-98d6-651fcb49f6b6",
+        "emitter": {
+          "name": "Hubble",
+          "version": "1.20.2+ge0dc92bd"
+        },
+        "verdict": "DROPPED",
+        "drop_reason": 133,
+        "ethernet": {
+          "source": "5e:68:ae:c3:33:8e",
+          "destination": "92:10:ba:34:37:4a"
+        },
+        "IP": {
+          "source": "10.244.2.100",
+          "destination": "10.244.2.99",
+          "ipVersion": "IPv4"
+        },
+        "l4": {
+          "TCP": {
+            "source_port": 58056,
+            "destination_port": 8081,
+            "flags": {
+              "SYN": true
+            }
+          }
+        },
+        "source": {
+          "ID": 2629,
+          "identity": 60731,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=edge-nginx",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "edge-nginx-7b7c95dcc7-jf6ws",
+          "workloads": [
+            {
+              "name": "edge-nginx",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "destination": {
+          "ID": 37,
+          "identity": 10699,
+          "cluster_name": "default",
+          "namespace": "obi-nginx-example",
+          "labels": [
+            "k8s:app=recommendations-v1",
+            "k8s:io.cilium.k8s.namespace.labels.kubernetes.io/metadata.name=obi-nginx-example",
+            "k8s:io.cilium.k8s.policy.cluster=default",
+            "k8s:io.cilium.k8s.policy.serviceaccount=default",
+            "k8s:io.kubernetes.pod.namespace=obi-nginx-example"
+          ],
+          "pod_name": "recommendations-v1-845444657b-d8sjr",
+          "workloads": [
+            {
+              "name": "recommendations-v1",
+              "kind": "Deployment"
+            }
+          ]
+        },
+        "Type": "L3_L4",
+        "node_name": "obi-cilium-v1-worker",
+        "node_labels": [
+          "beta.kubernetes.io/arch=arm64",
+          "beta.kubernetes.io/os=linux",
+          "kubernetes.io/arch=arm64",
+          "kubernetes.io/hostname=obi-cilium-v1-worker",
+          "kubernetes.io/os=linux"
+        ],
+        "event_type": {
+          "type": 1,
+          "sub_type": 133
+        },
+        "traffic_direction": "INGRESS",
+        "file": {
+          "name": "bpf_lxc.c",
+          "line": 2410
+        },
+        "drop_reason_desc": "POLICY_DENIED",
+        "Summary": "TCP Flags: SYN"
+      },
+      "node_name": "obi-cilium-v1-worker",
+      "time": "2026-10-30T19:09:36.637161006Z"
+    }
+  ],
+  "afterAttempts": [
+    {
+      "time": "2026-10-30T19:09:36.987Z",
+      "path": "/api/users/42/recommendations/v1/homepage-hero",
+      "status": 200,
+      "body": "recommendations v1 ok\n"
+    }
+  ],
+  "finishedAt": "2026-10-30T19:09:38.048Z",
+  "policyRemoved": true,
+  "passed": true
+}
