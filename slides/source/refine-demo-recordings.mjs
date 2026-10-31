@@ -24,11 +24,18 @@ if (Math.abs(duration(successSource) - 47.08) > 0.05 || Math.abs(duration(denial
   throw new Error('These edit points require the original September 26 captures. Audit new recordings before reusing them.');
 }
 // Keep clean, populated views. Reading holds repeat actual captured frames.
+const successPlaybackSpeed = 1.2;
+const successSections = [
+  {view: 'Grafana upper dashboard', output: [0, 8], source: [23, 28.16], finalFrameHoldSeconds: 2.84},
+  {view: 'Grafana lower dashboard', output: [8, 20], source: [28.4, 33.2], finalFrameHoldSeconds: 7.2},
+  {view: 'Hubble UI', output: [20, 29.76], source: [37.32, 47.08]},
+];
+const presentationTime = value => Number((value / successPlaybackSpeed).toFixed(3));
 const graph = '[0:v]split=3[a][b][c];' +
   '[a]trim=start=23:end=28.16,setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration=2.84,trim=duration=8[a1];' +
   '[b]trim=start=28.4:end=33.2,setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration=7.2,trim=duration=12[b1];' +
   '[c]trim=start=37.32:end=47.08,setpts=PTS-STARTPTS[c1];' +
-  '[a1][b1][c1]concat=n=3:v=1:a=0[v]';
+  `[a1][b1][c1]concat=n=3:v=1:a=0,setpts=(PTS-STARTPTS)/${successPlaybackSpeed}[v]`;
 const success = path.join(output, 'demo-2-success.mp4');
 const denial = path.join(output, 'demo-3-policy-denial.mp4');
 encode(['-i', successSource, '-filter_complex', graph, '-map', '[v]'], success);
@@ -37,14 +44,20 @@ for (const [file, at, name] of [[success, '0', 'demo-2-success-poster.png'], [de
   execFileSync(ffmpeg, ['-hide_banner', '-loglevel', 'error', '-y', '-ss', at, '-i', file, '-frames:v', '1', path.join(output, name)], {stdio: 'inherit'});
 }
 const manifest = {
-  recorded: '2026-09-26', edited: '2026-10-29',
-  success: {durationSeconds: duration(success), sections: [
-    {view: 'Grafana upper dashboard', output: [0, 8], source: [23, 28.16], finalFrameHoldSeconds: 2.84},
-    {view: 'Grafana lower dashboard', output: [8, 20], source: [28.4, 33.2], finalFrameHoldSeconds: 7.2},
-    {view: 'Hubble UI', outputStart: 20, source: [37.32, 47.08], speed: 1},
-  ]},
+  recorded: '2026-09-26', edited: '2026-10-31',
+  success: {
+    durationSeconds: duration(success),
+    previousDurationSeconds: successSections.at(-1).output[1],
+    playbackSpeedMultiplier: successPlaybackSpeed,
+    sections: successSections.map(section => ({
+      ...section,
+      output: section.output.map(presentationTime),
+      ...(section.finalFrameHoldSeconds === undefined ? {} : {finalFrameHoldSeconds: presentationTime(section.finalFrameHoldSeconds)}),
+      presentationSpeedMultiplier: successPlaybackSpeed,
+    })),
+  },
   denial: {durationSeconds: duration(denial), view: 'Terminal only', source: [0, 19.8]},
-  note: 'Reading holds repeat original UI frames. No telemetry values, verdicts, or timestamps were changed. The denial recording ends before Grafana and does not show recovery.',
+  note: 'Reading holds repeat original UI frames. No telemetry values, verdicts, or timestamps were changed. The denial recording ends before Grafana and does not show recovery. The success clip plays uniformly at 1.2x the original edited sequence, or 0.8x the previous 1.5x presentation version. Frame-rate rounding can slightly affect the encoded duration.',
 };
 await fs.writeFile(path.join(output, 'presentation-edits.json'), JSON.stringify(manifest, null, 2) + '\n');
 console.log(JSON.stringify(manifest));
